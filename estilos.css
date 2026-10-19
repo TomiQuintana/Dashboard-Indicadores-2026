@@ -27,16 +27,21 @@ body {
   min-height: 100vh;
 }
 
-/* Header & Barra de Filtros */
+/* Header & Barra de Filtros Fija (Sticky) */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--bg-color); /* Mantiene el fondo oscuro sólido (#0d1117) */
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 18px;
+  gap: 16px;
+  padding: 16px 0;
   margin-bottom: 24px;
-  padding-bottom: 16px;
   border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Sombra suave para separarlo del contenido al bajar */
 }
 
 .brand {

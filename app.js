@@ -581,7 +581,7 @@ function actualizarDashboardPorMes(mesIdx) {
   const d = dataPorMes[mesIdx];
 
   // 1. Textos
-  document.getElementById('subtitulo-periodo').textContent = `Área Regulatoria & Asuntos Científicos — Período: ${mesNombre} 2026`;
+  document.getElementById('subtitulo-periodo').textContent = `Área de Legislación Alimentaria — Período: ${mesNombre} 2026`;
   document.getElementById('label-status').textContent = `Datos de ${mesNombre}`;
   
   const rangoTexto = mesIdx === 0 ? 'Enero 2026' : `Ene - ${nombresMesesAbrev[mesIdx]} 2026`;

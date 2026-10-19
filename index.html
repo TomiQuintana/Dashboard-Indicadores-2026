@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="Dashboard-Indicadores-2026/logo.png">
+  <title>Dashboard de Indicadores del Área - 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Dashboard-Indicadores-2026/estilos.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- Barra de Navegación y Filtros -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo-badge">2026</div>
+      <div>
+        <h1>Tablero de Control e Indicadores</h1>
+        <p class="subtitle" id="subtitulo-periodo">Área Regulatoria & Asuntos Científicos — Período: Septiembre 2026</p>
+      </div>
+    </div>
+
+    <!-- Banner Institucional -->
+    <div class="hero-banner">
+      <div class="banner-overlay"></div>
+      <img src="Dashboard-Indicadores-2026/banner.jpg" alt="Arcor 75 años" class="banner-img">
+    </div>
+    
+    <!-- Filtro de Mes -->
+    <div class="filter-container">
+      <label for="select-mes" class="filter-label">Filtrar por Mes:</label>
+      <div class="select-wrapper">
+        <select id="select-mes" class="mes-dropdown">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8" selected>Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+      </div>
+      <div class="badge-status">
+        <span class="status-dot"></span> <span id="label-status">Datos de Septiembre</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-container">
+    
+    <!-- Tarjetas Resumen (KPI Cards) -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Solicitudes Ingresadas</span>
+        <div class="kpi-val" id="kpi-solic">62</div>
+        <span class="kpi-sub" id="kpi-solic-sub">39 Solucionadas (35 en SLA)</span>
+      </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Tareas Ingresadas</span>
+        <div class="kpi-val" id="kpi-tareas">147</div>
+        <span class="kpi-sub" id="kpi-tareas-sub">135 Finalizadas (133 a tiempo)</span>
+      </div>
+
+      <div class="kpi-card alert" id="card-infull">
+        <span class="kpi-label">INFULL Global</span>
+        <div class="kpi-val" id="kpi-infull">62.9%</div>
+        <span class="kpi-sub neg" id="kpi-infull-sub">Meta: 100.0% (-37.1%)</span>
+      </div>
+
+      <div class="kpi-card alert" id="card-ontime">
+        <span class="kpi-label">ONTIME Global</span>
+        <div class="kpi-val" id="kpi-ontime">56.5%</div>
+        <span class="kpi-sub neg" id="kpi-ontime-sub">Meta: 87.0% (-30.5%)</span>
+      </div>
+
+      <div class="kpi-card danger" id="card-backlog">
+        <span class="kpi-label">Backlog Vencido</span>
+        <div class="kpi-val" id="kpi-backlog">39</div>
+        <span class="kpi-sub" id="kpi-backlog-sub">Total Acumulado: 71</span>
+      </div>
+    </section>
+
+    <!-- Grilla General de Gráficos Superiores -->
+    <section class="charts-grid">
+
+      <!-- 1. Evolución INFULL y ONTIME -->
+      <div class="chart-card col-span-2">
+        <div class="card-header">
+          <h3>Solicitudes - Evolución Mensual Real vs Meta</h3>
+          <span class="tag" id="tag-evolucion">Ene - Sep 2026</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartEvolucionMetas"></canvas>
+        </div>
+      </div>
+
+      <!-- 2. INFULL por Proceso -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 id="title-infull-proc">Solicitudes - INFULL Real vs Meta</h3>
+          <span class="tag" id="tag-infull">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartInfullProceso"></canvas>
+        </div>
+      </div>
+
+      <!-- 3. ONTIME por Proceso -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 id="title-ontime-proc">Solicitudes - ONTIME Real vs Meta</h3>
+          <span class="tag" id="tag-ontime">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartOntimeProceso"></canvas>
+        </div>
+      </div>
+
+      <!-- 4. Flujo de Solicitudes y Tareas -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 id="title-flujo">Flujo Mensual: Solicitudes vs Tareas</h3>
+          <span class="tag" id="tag-flujo">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartFlujos"></canvas>
+        </div>
+      </div>
+
+      <!-- 5. Backlog -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 id="title-backlog">Solicitudes - Backlog Vencido</h3>
+          <span class="tag" id="tag-backlog">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartBacklog"></canvas>
+        </div>
+      </div>
+
+      <!-- 6. Tiempo Dedicado en Procesos -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3 id="title-horas-proc">Tiempo Dedicado por Proceso (Horas)</h3>
+          <span class="tag" id="tag-horas">Septiembre</span>
+        </div>
+        <div class="chart-wrapper pie-wrapper">
+          <canvas id="chartHorasProceso"></canvas>
+        </div>
+      </div>
+
+      <!-- 7. Distribución por Áreas Clientes -->
+      <div class="chart-card col-span-2">
+        <div class="card-header">
+          <h3 id="title-areas">Áreas Clientes: % Solicitudes vs % Horas Dedicadas</h3>
+          <span class="tag" id="tag-areas">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartAreasClientes"></canvas>
+        </div>
+      </div>
+
+      <!-- 8. Evolución % Horas Laborales Registradas -->
+      <div class="chart-card">
+        <div class="card-header">
+          <h3>% Horas Laborales Registradas - Evolución</h3>
+          <span class="tag" id="tag-horas-reg">Ene - Sep 2026</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartHorasRegistradas"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Fila Inferior de 4 Gráficos con Proporciones Óptimas -->
+    <section class="four-row-grid">
+
+      <!-- 9. Tiempo Promedio de Respuesta (Días) - Evolución -->
+      <div class="chart-card card-evol-rta">
+        <div class="card-header">
+          <h3>Tiempo Promedio (Días) - Evolución</h3>
+          <span class="tag" id="tag-tiempo-resp">Ene - Sep 2026</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartTiempoRespuestaEvol"></canvas>
+        </div>
+      </div>
+
+      <!-- 10. Tiempo Promedio Respuesta Solicitudes - Mes (Achicado en ancho) -->
+      <div class="chart-card card-mes-rta">
+        <div class="card-header">
+          <h3 id="title-tiempo-mes">Tiempo Promedio - Mes</h3>
+          <span class="tag" id="tag-tiempo-mes">Septiembre</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="chartTiempoRespuestaMes"></canvas>
+        </div>
+      </div>
+
+      <!-- 11. Cantidad de Solicitudes por Área (Agrandado en ancho) -->
+      <div class="chart-card card-treemap">
+        <div class="card-header">
+          <h3 id="title-treemap-solic">Cantidad de Solicitudes por Área</h3>
+          <span class="tag" id="tag-treemap-solic">Septiembre</span>
+        </div>
+        <div class="treemap-container" id="treemap-solic-container"></div>
+      </div>
+
+      <!-- 12. Tipo de Tareas (Agrandado en ancho) -->
+      <div class="chart-card card-treemap">
+        <div class="card-header">
+          <h3 id="title-treemap-tareas">Tipo de Tareas</h3>
+          <span class="tag" id="tag-treemap-tareas">Septiembre</span>
+        </div>
+        <div class="treemap-container" id="treemap-tareas-container"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="Dashboard-Indicadores-2026/app.js"></script>
+</body>
+</html>

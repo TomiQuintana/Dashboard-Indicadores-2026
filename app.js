@@ -3,7 +3,7 @@
  * Archivo: app.js
  */
 
-// Configuración adaptada para Tema Blanco/Claro
+// Configuración adaptada para Tema Claro / Blanco
 Chart.defaults.color = '#475569';
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.borderColor = 'rgba(0, 0, 0, 0.06)';
@@ -202,7 +202,7 @@ const dataPorMes = [
   { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
 
-// Plugin para valores numéricos oscuros sobre barras
+// Plugin para valores numéricos enteros o decimales sobre barras
 const pluginValoresEnBarras = {
   id: 'pluginValoresEnBarras',
   afterDatasetsDraw(chart) {
@@ -214,11 +214,13 @@ const pluginValoresEnBarras = {
         const val = dataset.data[index];
         if (val !== null && val !== undefined && val > 0) {
           ctx.save();
-          ctx.fillStyle = '#0f172a'; // Texto oscuro para fondo claro
+          ctx.fillStyle = '#1e293b';
           ctx.font = 'bold 11px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          ctx.fillText(Number(val).toFixed(2).replace('.', ','), element.x, element.y - 4);
+          // Si es entero muestra número entero, si tiene decimales muestra con coma
+          const txt = Number.isInteger(val) ? val.toString() : Number(val).toFixed(2).replace('.', ',');
+          ctx.fillText(txt, element.x, element.y - 4);
           ctx.restore();
         }
       });
@@ -403,24 +405,56 @@ function initCharts() {
     }
   });
 
-  // 4. Flujo Mensual
+  // 4. Flujo Mensual (SEMÁFORO: Rojo -> Amarillo -> Verde)
   chartFlujos = new Chart(document.getElementById('chartFlujos'), {
     type: 'bar',
+    plugins: [pluginValoresEnBarras],
     data: {
       labels: ['Ingresadas', 'Solucionadas / Finalizadas', 'Dentro de SLA / En Tiempo'],
       datasets: [
-        { label: 'Solicitudes', data: [], backgroundColor: '#0284c7', borderRadius: 6 },
-        { label: 'Tareas', data: [], backgroundColor: '#8b5cf6', borderRadius: 6 }
+        {
+          label: 'Solicitudes',
+          data: [],
+          // Rojo claro (Ingresadas) | Amarillo ámbar (Solucionadas) | Verde esmeralda (En SLA)
+          backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
+          borderColor: ['#dc2626', '#d97706', '#059669'],
+          borderWidth: 1.2,
+          borderRadius: 6
+        },
+        {
+          label: 'Tareas',
+          data: [],
+          // Rojo carmesí intenso (Ingresadas) | Amarillo mostaza (Finalizadas) | Verde bosque (En Tiempo)
+          backgroundColor: ['#b91c1c', '#d97706', '#047857'],
+          borderColor: ['#991b1b', '#b45309', '#065f46'],
+          borderWidth: 1.2,
+          borderRadius: 6
+        }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: { padding: { top: 22, bottom: 5, left: 5, right: 5 } },
       scales: {
-        y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
-        x: { grid: { display: false } }
+        y: { 
+          grid: { color: 'rgba(0, 0, 0, 0.05)' },
+          ticks: { font: { size: 11 } }
+        },
+        x: { 
+          grid: { display: false },
+          ticks: { font: { size: 10.5, weight: '600' } }
+        }
       },
-      plugins: { legend: { position: 'top' } }
+      plugins: { 
+        legend: { 
+          position: 'top',
+          labels: {
+            boxWidth: 12,
+            font: { size: 11.5, weight: '600' }
+          }
+        }
+      }
     }
   });
 
@@ -466,7 +500,7 @@ function initCharts() {
     }
   });
 
-  // 7. Áreas Clientes (Diferenciado cromáticamente)
+  // 7. Áreas Clientes
   chartAreas = new Chart(document.getElementById('chartAreasClientes'), {
     type: 'bar',
     data: {
@@ -697,6 +731,7 @@ function actualizarDashboardPorMes(mesIdx) {
   chartOntime.data.datasets[1].data = d.ontimeProc;
   chartOntime.update();
 
+  // Flujo Mensual (actualización de datos)
   chartFlujos.data.datasets[0].data = [d.solicIng, d.solicSol, d.solicSla];
   chartFlujos.data.datasets[1].data = [d.tareasIng, d.tareasFin, d.tareasOntime];
   chartFlujos.update();

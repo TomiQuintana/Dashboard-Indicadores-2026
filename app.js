@@ -3,7 +3,6 @@
  * Archivo: app.js
  */
 
-// Configuración adaptada para Tema Claro / Blanco
 Chart.defaults.color = '#475569';
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.borderColor = 'rgba(0, 0, 0, 0.06)';
@@ -77,132 +76,88 @@ const treemapTareasData = [
   { label: 'Tratamiento de desvíos / Reclamos', valor: 1, color: '#d81b60' }
 ];
 
-// Base mensual consolidada
-const dataPorMes = [
+// =========================================================================
+// NOVEDADES REGULATORIAS 2026 POR PAÍS Y MES (Vigilancia Regulatoria.xlsm)
+// Códigos ISO-3 estándar para mapeo geográfico mundial
+// =========================================================================
+const novedadesPorMes = [
   // Enero (0)
   {
-    solicIng: 117, solicSol: 116, solicSla: 107,
-    tareasIng: 198, tareasFin: 195, tareasOntime: 190,
-    infullGlobal: 99.1, ontimeGlobal: 92.2,
-    infullProc: [100, 99.2, 98.5, 100, 100, 99.1],
-    ontimeProc: [null, 93.1, 91.5, null, null, 92.2],
-    backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0,
-    horasProc: [12.0, 195.5, 180.0, 14.5, 35.2],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [18.2, 16.5, 12.4, 9.5, 6.2, 4.1, 3.2],
-    areasHoras: [11.5, 14.2, 16.8, 8.4, 3.2, 2.5, 1.9]
+    "ARG": 18, "BRA": 14, "MEX": 12, "CHL": 6, "COL": 5, "URY": 4, "PER": 3,
+    "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 4, "KOR": 2, "SAU": 1
   },
   // Febrero (1)
   {
-    solicIng: 64, solicSol: 61, solicSla: 52,
-    tareasIng: 142, tareasFin: 138, tareasOntime: 134,
-    infullGlobal: 95.2, ontimeGlobal: 84.1,
-    infullProc: [80.0, 96.0, 94.8, 100, 90.0, 95.2],
-    ontimeProc: [null, 85.2, 83.5, null, null, 84.1],
-    backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0,
-    horasProc: [8.5, 160.0, 142.0, 10.0, 28.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [17.0, 15.2, 11.0, 8.5, 5.8, 3.9, 2.8],
-    areasHoras: [10.2, 12.8, 14.5, 7.8, 2.9, 2.2, 1.5]
+    "ARG": 15, "BRA": 11, "MEX": 9, "CHL": 5, "COL": 4, "URY": 3, "PER": 2,
+    "USA": 7, "ESP": 5, "ITA": 2, "DEU": 3, "FRA": 2, "GBR": 4, "CHN": 3, "KOR": 1, "SAU": 1
   },
   // Marzo (2)
   {
-    solicIng: 77, solicSol: 75, solicSla: 68,
-    tareasIng: 165, tareasFin: 160, tareasOntime: 155,
-    infullGlobal: 97.4, ontimeGlobal: 88.2,
-    infullProc: [100, 98.0, 96.5, 100, 95.0, 97.4],
-    ontimeProc: [null, 89.1, 87.4, null, null, 88.2],
-    backlogTotal: 2, backlogNoVenc: 1, backlogVenc: 1,
-    horasProc: [10.0, 175.0, 150.0, 12.0, 31.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [16.5, 16.0, 10.5, 8.2, 5.5, 3.8, 2.5],
-    areasHoras: [9.8, 13.5, 13.9, 7.2, 2.7, 2.0, 1.4]
+    "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 4, "COL": 5, "URY": 2, "PER": 3,
+    "USA": 9, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 4, "GBR": 6, "CHN": 2, "KOR": 2, "SAU": 2
   },
   // Abril (3)
   {
-    solicIng: 78, solicSol: 77, solicSla: 68,
-    tareasIng: 180, tareasFin: 176, tareasOntime: 170,
-    infullGlobal: 98.7, ontimeGlobal: 87.0,
-    infullProc: [100, 99.0, 98.0, 100, 96.0, 98.7],
-    ontimeProc: [null, 87.5, 86.8, null, null, 87.0],
-    backlogTotal: 3, backlogNoVenc: 1, backlogVenc: 2,
-    horasProc: [14.0, 185.0, 165.0, 15.0, 40.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [15.8, 15.5, 11.2, 8.0, 5.2, 3.5, 2.2],
-    areasHoras: [8.5, 12.0, 15.1, 6.9, 2.5, 1.8, 1.2]
+    "ARG": 14, "BRA": 10, "MEX": 8, "CHL": 5, "COL": 3, "URY": 2, "PER": 2,
+    "USA": 6, "ESP": 4, "ITA": 3, "DEU": 3, "FRA": 2, "GBR": 3, "CHN": 1, "KOR": 1, "SAU": 0
   },
   // Mayo (4)
   {
-    solicIng: 65, solicSol: 63, solicSla: 56,
-    tareasIng: 155, tareasFin: 151, tareasOntime: 147,
-    infullGlobal: 96.9, ontimeGlobal: 86.2,
-    infullProc: [90.0, 97.5, 96.0, 100, 92.0, 96.9],
-    ontimeProc: [null, 86.8, 85.5, null, null, 86.2],
-    backlogTotal: 5, backlogNoVenc: 1, backlogVenc: 4,
-    horasProc: [11.0, 170.0, 155.0, 13.0, 34.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [15.2, 14.8, 10.1, 7.8, 5.0, 3.2, 2.0],
-    areasHoras: [7.9, 11.2, 13.8, 6.5, 2.2, 1.6, 1.1]
+    "ARG": 20, "BRA": 15, "MEX": 14, "CHL": 7, "COL": 6, "URY": 4, "PER": 4,
+    "USA": 11, "ESP": 8, "ITA": 5, "DEU": 6, "FRA": 4, "GBR": 7, "CHN": 5, "KOR": 3, "SAU": 2
   },
   // Junio (5)
   {
-    solicIng: 85, solicSol: 65, solicSla: 63,
-    tareasIng: 172, tareasFin: 162, tareasOntime: 158,
-    infullGlobal: 76.5, ontimeGlobal: 74.1,
-    infullProc: [50.0, 78.2, 75.0, 60.0, 70.0, 76.5],
-    ontimeProc: [null, 75.0, 73.8, null, null, 74.1],
-    backlogTotal: 22, backlogNoVenc: 15, backlogVenc: 7,
-    horasProc: [9.0, 155.0, 140.0, 11.0, 30.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [16.0, 15.0, 9.8, 7.5, 4.8, 3.0, 1.9],
-    areasHoras: [6.8, 10.5, 12.5, 5.9, 1.9, 1.4, 0.9]
+    "ARG": 17, "BRA": 13, "MEX": 11, "CHL": 6, "COL": 4, "URY": 3, "PER": 3,
+    "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 1
   },
   // Julio (6)
   {
-    solicIng: 64, solicSol: 52, solicSla: 48,
-    tareasIng: 150, tareasFin: 142, tareasOntime: 139,
-    infullGlobal: 81.0, ontimeGlobal: 74.6,
-    infullProc: [60.0, 83.0, 80.5, 70.0, 75.0, 81.0],
-    ontimeProc: [null, 76.2, 74.0, null, null, 74.6],
-    backlogTotal: 34, backlogNoVenc: 23, backlogVenc: 11,
-    horasProc: [7.5, 148.0, 135.0, 9.5, 26.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [15.5, 14.5, 8.5, 7.0, 5.0, 2.8, 1.8],
-    areasHoras: [5.5, 9.2, 11.5, 4.8, 1.5, 1.1, 0.8]
+    "ARG": 19, "BRA": 14, "MEX": 13, "CHL": 8, "COL": 5, "URY": 3, "PER": 4,
+    "USA": 10, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 3, "GBR": 6, "CHN": 4, "KOR": 4, "SAU": 2
   },
   // Agosto (7)
   {
-    solicIng: 57, solicSol: 43, solicSla: 41,
-    tareasIng: 139, tareasFin: 130, tareasOntime: 127,
-    infullGlobal: 75.4, ontimeGlobal: 71.9,
-    infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4],
-    ontimeProc: [null, 73.0, 71.5, null, null, 71.9],
-    backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21,
-    horasProc: [6.0, 135.0, 125.0, 8.0, 22.0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7],
-    areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6]
+    "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 6, "COL": 4, "URY": 2, "PER": 3,
+    "USA": 9, "ESP": 5, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 3
   },
   // Septiembre (8)
   {
-    solicIng: 62, solicSol: 39, solicSla: 35,
-    tareasIng: 147, tareasFin: 135, tareasOntime: 133,
-    infullGlobal: 62.9, ontimeGlobal: 56.5,
-    infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9],
-    ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5],
-    backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39,
-    horasProc: [0, 123.5, 112.25, 0, 6.1],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61],
-    areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89]
+    "ARG": 22, "BRA": 17, "MEX": 15, "CHL": 9, "COL": 7, "URY": 5, "PER": 4, "ECU": 3, "BOL": 3, "PRY": 2,
+    "USA": 12, "ESP": 9, "ITA": 6, "DEU": 7, "FRA": 5, "GBR": 8, "CHN": 6, "KOR": 5, "SAU": 4, "VNM": 2, "TUR": 2
   },
-  // Proyecciones
+  // Octubre a Diciembre (Proyecciones)
+  { "ARG": 12, "BRA": 8, "MEX": 7, "CHL": 4, "COL": 3, "USA": 5, "ESP": 4 },
+  { "ARG": 0, "BRA": 0, "MEX": 0 },
+  { "ARG": 0, "BRA": 0, "MEX": 0 }
+];
+
+// Nombres legibles en español por código ISO-3
+const nombresPaisesES = {
+  "ARG": "Argentina", "BRA": "Brasil", "MEX": "México", "CHL": "Chile",
+  "COL": "Colombia", "URY": "Uruguay", "PER": "Perú", "ECU": "Ecuador",
+  "BOL": "Bolivia", "PRY": "Paraguay", "USA": "Estados Unidos",
+  "ESP": "España", "ITA": "Italia", "DEU": "Alemania", "FRA": "Francia",
+  "GBR": "Reino Unido", "CHN": "China", "KOR": "Corea del Sur",
+  "SAU": "Arabia Saudita", "VNM": "Vietnam", "TUR": "Turquía"
+};
+
+// Datos mensuales base
+const dataPorMes = [
+  { solicIng: 117, solicSol: 116, solicSla: 107, tareasIng: 198, tareasFin: 195, tareasOntime: 190, infullGlobal: 99.1, ontimeGlobal: 92.2, infullProc: [100, 99.2, 98.5, 100, 100, 99.1], ontimeProc: [null, 93.1, 91.5, null, null, 92.2], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [12.0, 195.5, 180.0, 14.5, 35.2], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [18.2, 16.5, 12.4, 9.5, 6.2, 4.1, 3.2], areasHoras: [11.5, 14.2, 16.8, 8.4, 3.2, 2.5, 1.9] },
+  { solicIng: 64, solicSol: 61, solicSla: 52, tareasIng: 142, tareasFin: 138, tareasOntime: 134, infullGlobal: 95.2, ontimeGlobal: 84.1, infullProc: [80.0, 96.0, 94.8, 100, 90.0, 95.2], ontimeProc: [null, 85.2, 83.5, null, null, 84.1], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [8.5, 160.0, 142.0, 10.0, 28.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [17.0, 15.2, 11.0, 8.5, 5.8, 3.9, 2.8], areasHoras: [10.2, 12.8, 14.5, 7.8, 2.9, 2.2, 1.5] },
+  { solicIng: 77, solicSol: 75, solicSla: 68, tareasIng: 165, tareasFin: 160, tareasOntime: 155, infullGlobal: 97.4, ontimeGlobal: 88.2, infullProc: [100, 98.0, 96.5, 100, 95.0, 97.4], ontimeProc: [null, 89.1, 87.4, null, null, 88.2], backlogTotal: 2, backlogNoVenc: 1, backlogVenc: 1, horasProc: [10.0, 175.0, 150.0, 12.0, 31.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.5, 16.0, 10.5, 8.2, 5.5, 3.8, 2.5], areasHoras: [9.8, 13.5, 13.9, 7.2, 2.7, 2.0, 1.4] },
+  { solicIng: 78, solicSol: 77, solicSla: 68, tareasIng: 180, tareasFin: 176, tareasOntime: 170, infullGlobal: 98.7, ontimeGlobal: 87.0, infullProc: [100, 99.0, 98.0, 100, 96.0, 98.7], ontimeProc: [null, 87.5, 86.8, null, null, 87.0], backlogTotal: 3, backlogNoVenc: 1, backlogVenc: 2, horasProc: [14.0, 185.0, 165.0, 15.0, 40.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.8, 15.5, 11.2, 8.0, 5.2, 3.5, 2.2], areasHoras: [8.5, 12.0, 15.1, 6.9, 2.5, 1.8, 1.2] },
+  { solicIng: 65, solicSol: 63, solicSla: 56, tareasIng: 155, tareasFin: 151, tareasOntime: 147, infullGlobal: 96.9, ontimeGlobal: 86.2, infullProc: [90.0, 97.5, 96.0, 100, 92.0, 96.9], ontimeProc: [null, 86.8, 85.5, null, null, 86.2], backlogTotal: 5, backlogNoVenc: 1, backlogVenc: 4, horasProc: [11.0, 170.0, 155.0, 13.0, 34.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.2, 14.8, 10.1, 7.8, 5.0, 3.2, 2.0], areasHoras: [7.9, 11.2, 13.8, 6.5, 2.2, 1.6, 1.1] },
+  { solicIng: 85, solicSol: 65, solicSla: 63, tareasIng: 172, tareasFin: 162, tareasOntime: 158, infullGlobal: 76.5, ontimeGlobal: 74.1, infullProc: [50.0, 78.2, 75.0, 60.0, 70.0, 76.5], ontimeProc: [null, 75.0, 73.8, null, null, 74.1], backlogTotal: 22, backlogNoVenc: 15, backlogVenc: 7, horasProc: [9.0, 155.0, 140.0, 11.0, 30.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.0, 15.0, 9.8, 7.5, 4.8, 3.0, 1.9], areasHoras: [6.8, 10.5, 12.5, 5.9, 1.9, 1.4, 0.9] },
+  { solicIng: 64, solicSol: 52, solicSla: 48, tareasIng: 150, tareasFin: 142, tareasOntime: 139, infullGlobal: 81.0, ontimeGlobal: 74.6, infullProc: [60.0, 83.0, 80.5, 70.0, 75.0, 81.0], ontimeProc: [null, 76.2, 74.0, null, null, 74.6], backlogTotal: 34, backlogNoVenc: 23, backlogVenc: 11, horasProc: [7.5, 148.0, 135.0, 9.5, 26.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.5, 14.5, 8.5, 7.0, 5.0, 2.8, 1.8], areasHoras: [5.5, 9.2, 11.5, 4.8, 1.5, 1.1, 0.8] },
+  { solicIng: 57, solicSol: 43, solicSla: 41, tareasIng: 139, tareasFin: 130, tareasOntime: 127, infullGlobal: 75.4, ontimeGlobal: 71.9, infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4], ontimeProc: [null, 73.0, 71.5, null, null, 71.9], backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, horasProc: [6.0, 135.0, 125.0, 8.0, 22.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7], areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6] },
+  { solicIng: 62, solicSol: 39, solicSla: 35, tareasIng: 147, tareasFin: 135, tareasOntime: 133, infullGlobal: 62.9, ontimeGlobal: 56.5, infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0, 123.5, 112.25, 0, 6.1], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] },
   { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
   { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
   { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
 
-// Plugin para valores numéricos enteros o decimales sobre barras
 const pluginValoresEnBarras = {
   id: 'pluginValoresEnBarras',
   afterDatasetsDraw(chart) {
@@ -218,7 +173,6 @@ const pluginValoresEnBarras = {
           ctx.font = 'bold 11px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
-          // Si es entero muestra número entero, si tiene decimales muestra con coma
           const txt = Number.isInteger(val) ? val.toString() : Number(val).toFixed(2).replace('.', ',');
           ctx.fillText(txt, element.x, element.y - 4);
           ctx.restore();
@@ -230,6 +184,121 @@ const pluginValoresEnBarras = {
 
 let chartMetas, chartInfull, chartOntime, chartFlujos, chartBacklog, chartHoras, chartAreas, chartHorasReg, chartTiempoRta, chartTiempoMes;
 let currentSelectedMonth = 8; // Septiembre
+
+// Variables para Leaflet Map
+let mapaMundial = null;
+let geojsonLayer = null;
+let geojsonData = null;
+
+// Escala de color estilo mapa coroplético (gradiente de violetas a morados según la imagen)
+function getColorNovedades(d) {
+  return d > 15 ? '#581c87' :
+         d >= 10 ? '#7e22ce' :
+         d >= 5  ? '#a855f7' :
+         d >= 2  ? '#c084fc' :
+         d >= 1  ? '#e9d5ff' :
+                   '#e2e8f0'; // 0 novedades: gris claro
+}
+
+// Inicialización del Mapa
+async function initMapa() {
+  const mapElement = document.getElementById('mapa-novedades');
+  if (!mapElement) return;
+
+  // Creamos el mapa centrado con vista mundial
+  mapaMundial = L.map('mapa-novedades', {
+    center: [15, 0],
+    zoom: 2,
+    minZoom: 1.5,
+    maxZoom: 6,
+    zoomControl: true,
+    attributionControl: false
+  });
+
+  // Capa base minimalista clara
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(mapaMundial);
+
+  // Cargamos el GeoJSON de países del mundo
+  try {
+    const res = await fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json');
+    geojsonData = await res.json();
+    actualizarCapaMapa(currentSelectedMonth);
+  } catch (err) {
+    console.error('Error al cargar GeoJSON mundial:', err);
+  }
+}
+
+// Actualizar colores y tooltips del mapa por mes
+function actualizarCapaMapa(mesIdx) {
+  if (!mapaMundial || !geojsonData) return;
+
+  if (geojsonLayer) {
+    mapaMundial.removeLayer(geojsonLayer);
+  }
+
+  const datosMes = novedadesPorMes[mesIdx] || {};
+  let totalMes = 0;
+
+  // Calculamos total de novedades del mes
+  Object.values(datosMes).forEach(cant => totalMes += cant);
+  const badgeTotal = document.getElementById('badge-total-novedades');
+  if (badgeTotal) {
+    badgeTotal.textContent = `Total Novedades: ${totalMes}`;
+  }
+
+  geojsonLayer = L.geoJson(geojsonData, {
+    style: function (feature) {
+      const iso = feature.id; // ISO3
+      const cantidad = datosMes[iso] || 0;
+      return {
+        fillColor: getColorNovedades(cantidad),
+        weight: 1,
+        opacity: 1,
+        color: '#cbd5e1',
+        dashArray: '',
+        fillOpacity: 0.85
+      };
+    },
+    onEachFeature: function (feature, layer) {
+      const iso = feature.id;
+      const nombreES = nombresPaisesES[iso] || feature.properties.name;
+      const cantidad = datosMes[iso] || 0;
+
+      // Tooltip interactivo flotante al pasar el mouse
+      layer.bindTooltip(`
+        <div class="map-tooltip-content">
+          <strong>${nombreES}</strong>
+          <span>Novedades: <b>${cantidad}</b></span>
+        </div>
+      `, {
+        sticky: true,
+        direction: 'auto',
+        className: 'custom-map-tooltip'
+      });
+
+      // Efecto hover
+      layer.on({
+        mouseover: function (e) {
+          const l = e.target;
+          l.setStyle({
+            weight: 2.5,
+            color: '#0284c7',
+            fillOpacity: 0.95
+          });
+          if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            l.bringToFront();
+          }
+        },
+        mouseout: function (e) {
+          geojsonLayer.resetStyle(e.target);
+        }
+      });
+    }
+  }).addTo(mapaMundial);
+}
 
 // Renderizador visual de Treemaps
 function renderTreemap(containerId, items, factorEscala = 1) {
@@ -309,12 +378,7 @@ function initCharts() {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        y: { 
-          min: 40, 
-          max: 105, 
-          ticks: { callback: v => v + '%' },
-          grid: { color: 'rgba(0, 0, 0, 0.05)' }
-        },
+        y: { min: 40, max: 105, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false } }
       }
     }
@@ -405,7 +469,7 @@ function initCharts() {
     }
   });
 
-  // 4. Flujo Mensual (SEMÁFORO: Rojo -> Amarillo -> Verde)
+  // 4. Flujo Mensual (SEMÁFORO)
   chartFlujos = new Chart(document.getElementById('chartFlujos'), {
     type: 'bar',
     plugins: [pluginValoresEnBarras],
@@ -415,7 +479,6 @@ function initCharts() {
         {
           label: 'Solicitudes',
           data: [],
-          // Rojo claro (Ingresadas) | Amarillo ámbar (Solucionadas) | Verde esmeralda (En SLA)
           backgroundColor: ['#ef4444', '#f59e0b', '#10b981'],
           borderColor: ['#dc2626', '#d97706', '#059669'],
           borderWidth: 1.2,
@@ -424,7 +487,6 @@ function initCharts() {
         {
           label: 'Tareas',
           data: [],
-          // Rojo carmesí intenso (Ingresadas) | Amarillo mostaza (Finalizadas) | Verde bosque (En Tiempo)
           backgroundColor: ['#b91c1c', '#d97706', '#047857'],
           borderColor: ['#991b1b', '#b45309', '#065f46'],
           borderWidth: 1.2,
@@ -437,24 +499,10 @@ function initCharts() {
       maintainAspectRatio: false,
       layout: { padding: { top: 22, bottom: 5, left: 5, right: 5 } },
       scales: {
-        y: { 
-          grid: { color: 'rgba(0, 0, 0, 0.05)' },
-          ticks: { font: { size: 11 } }
-        },
-        x: { 
-          grid: { display: false },
-          ticks: { font: { size: 10.5, weight: '600' } }
-        }
+        y: { grid: { color: 'rgba(0, 0, 0, 0.05)' }, ticks: { font: { size: 11 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10.5, weight: '600' } } }
       },
-      plugins: { 
-        legend: { 
-          position: 'top',
-          labels: {
-            boxWidth: 12,
-            font: { size: 11.5, weight: '600' }
-          }
-        }
-      }
+      plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11.5, weight: '600' } } } }
     }
   });
 
@@ -506,22 +554,8 @@ function initCharts() {
     data: {
       labels: [],
       datasets: [
-        { 
-          label: '% Solicitudes Recibidas', 
-          data: [], 
-          backgroundColor: '#06b6d4',
-          borderColor: '#0891b2',
-          borderWidth: 1,
-          borderRadius: 4 
-        },
-        { 
-          label: '% Horas Dedicadas', 
-          data: [], 
-          backgroundColor: '#f59e0b',
-          borderColor: '#d97706',
-          borderWidth: 1,
-          borderRadius: 4 
-        }
+        { label: '% Solicitudes Recibidas', data: [], backgroundColor: '#06b6d4', borderColor: '#0891b2', borderWidth: 1, borderRadius: 4 },
+        { label: '% Horas Dedicadas', data: [], backgroundColor: '#f59e0b', borderColor: '#d97706', borderWidth: 1, borderRadius: 4 }
       ]
     },
     options: {
@@ -601,7 +635,7 @@ function initCharts() {
     }
   });
 
-  // 10. Tiempo Promedio Respuesta Mensual (Achicado en ancho)
+  // 10. Tiempo Promedio Respuesta Mensual
   chartTiempoMes = new Chart(document.getElementById('chartTiempoRespuestaMes'), {
     type: 'bar',
     plugins: [pluginValoresEnBarras],
@@ -635,7 +669,7 @@ function actualizarDashboardPorMes(mesIdx) {
   const mesNombre = nombresMeses[mesIdx];
   const d = dataPorMes[mesIdx];
 
-  // 1. Textos y encabezados
+  // 1. Textos y etiquetas
   document.getElementById('subtitulo-periodo').textContent = `Área de Legislación Alimentaria — Período: ${mesNombre} 2026`;
   document.getElementById('label-status').textContent = `Datos de ${mesNombre}`;
   
@@ -646,19 +680,22 @@ function actualizarDashboardPorMes(mesIdx) {
     if (el) el.textContent = rangoTexto;
   });
 
-  ['tag-infull', 'tag-ontime', 'tag-flujo', 'tag-backlog', 'tag-horas', 'tag-areas', 'tag-tiempo-mes', 'tag-treemap-solic', 'tag-treemap-tareas'].forEach(id => {
+  ['tag-infull', 'tag-ontime', 'tag-flujo', 'tag-backlog', 'tag-horas', 'tag-areas', 'tag-tiempo-mes', 'tag-treemap-solic', 'tag-treemap-tareas', 'tag-mapa'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = mesNombre;
   });
 
   const titleTiempoMes = document.getElementById('title-tiempo-mes');
-  if (titleTiempoMes) titleTiempoMes.textContent = `Tiempo Promedio - ${mesNombre}`;
+  if (titleTiempoMes) titleTiempoMes.textContent = `Promedio - ${mesNombre}`;
 
   const titleTreemapSolic = document.getElementById('title-treemap-solic');
   if (titleTreemapSolic) titleTreemapSolic.textContent = `Cantidad de Solicitudes por Área - ${mesNombre}`;
 
   const titleTreemapTareas = document.getElementById('title-treemap-tareas');
   if (titleTreemapTareas) titleTreemapTareas.textContent = `Tipo de Tareas - ${mesNombre}`;
+
+  const titleMapa = document.getElementById('title-mapa-novedades');
+  if (titleMapa) titleMapa.textContent = `Vigilancia Regulatoria: Novedades por País - ${mesNombre} 2026`;
 
   // 2. Tarjetas KPIs
   document.getElementById('kpi-solic').textContent = d.solicIng;
@@ -724,14 +761,13 @@ function actualizarDashboardPorMes(mesIdx) {
   chartHorasReg.data.datasets[0].data = serieHorasRegHastaMes;
   chartHorasReg.update();
 
-  // 4. Gráficos de Proceso y Distribución
+  // 4. Gráficos de Proceso y Flujo
   chartInfull.data.datasets[1].data = d.infullProc;
   chartInfull.update();
 
   chartOntime.data.datasets[1].data = d.ontimeProc;
   chartOntime.update();
 
-  // Flujo Mensual (actualización de datos)
   chartFlujos.data.datasets[0].data = [d.solicIng, d.solicSol, d.solicSla];
   chartFlujos.data.datasets[1].data = [d.tareasIng, d.tareasFin, d.tareasOntime];
   chartFlujos.update();
@@ -747,7 +783,7 @@ function actualizarDashboardPorMes(mesIdx) {
   chartAreas.data.datasets[1].data = d.areasHoras;
   chartAreas.update();
 
-  // 5. Tiempo Promedio Respuesta del Mes
+  // 5. Tiempo Promedio del Mes
   const valorAsesMes = historicoEvolucion.tiempoAses[mesIdx] !== null ? historicoEvolucion.tiempoAses[mesIdx] : 0;
   const valorDifMes = historicoEvolucion.tiempoDif[mesIdx] !== null ? historicoEvolucion.tiempoDif[mesIdx] : 0;
   chartTiempoMes.data.datasets[0].data = [valorAsesMes, valorDifMes];
@@ -756,13 +792,17 @@ function actualizarDashboardPorMes(mesIdx) {
   // 6. Treemaps Dinámicos
   const factorSolic = d.solicIng > 0 ? (d.solicIng / 62) : 0;
   const factorTareas = d.tareasIng > 0 ? (d.tareasIng / 147) : 0;
-
   renderTreemap('treemap-solic-container', treemapSolicData, factorSolic);
   renderTreemap('treemap-tareas-container', treemapTareasData, factorTareas);
+
+  // 7. Actualización Reactiva del Mapa Mundial Coroplético
+  actualizarCapaMapa(mesIdx);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initCharts();
+  initMapa();
+
   const selectMes = document.getElementById('select-mes');
   actualizarDashboardPorMes(parseInt(selectMes.value, 10));
 

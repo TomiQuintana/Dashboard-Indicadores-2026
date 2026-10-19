@@ -415,7 +415,7 @@ body {
 #mapa-novedades {
   width: 100%;
   height: 100%;
-  background-color: #f8fafc;
+  background-color: #ffffff; /* O #f8fafc si prefieres un gris muy suave */
 }
 
 /* Leyenda Coroplética */

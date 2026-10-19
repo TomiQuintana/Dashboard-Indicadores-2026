@@ -205,23 +205,17 @@ async function initMapa() {
   const mapElement = document.getElementById('mapa-novedades');
   if (!mapElement) return;
 
-  // Creamos el mapa centrado con vista mundial
+  // Mapa centrado con vista mundial limpia y sin marcas de agua
   mapaMundial = L.map('mapa-novedades', {
-    center: [15, 0],
+    center: [20, 0],
     zoom: 2,
     minZoom: 1.5,
-    maxZoom: 6,
+    maxZoom: 5,
     zoomControl: true,
     attributionControl: false
   });
 
-  // Capa base minimalista clara
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(mapaMundial);
-
-  // Cargamos el GeoJSON de países del mundo
+  // Cargamos el GeoJSON de países del mundo directamente
   try {
     const res = await fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json');
     geojsonData = await res.json();

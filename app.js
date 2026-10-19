@@ -3,9 +3,10 @@
  * Archivo: app.js
  */
 
-Chart.defaults.color = '#8b949e';
+// Configuración adaptada para Tema Blanco/Claro
+Chart.defaults.color = '#475569';
 Chart.defaults.font.family = "'Inter', sans-serif";
-Chart.defaults.borderColor = 'rgba(48, 54, 61, 0.6)';
+Chart.defaults.borderColor = 'rgba(0, 0, 0, 0.06)';
 
 const nombresMeses = [
   'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
@@ -201,7 +202,7 @@ const dataPorMes = [
   { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
 
-// Plugin para valores numéricos sobre barras
+// Plugin para valores numéricos oscuros sobre barras
 const pluginValoresEnBarras = {
   id: 'pluginValoresEnBarras',
   afterDatasetsDraw(chart) {
@@ -213,7 +214,7 @@ const pluginValoresEnBarras = {
         const val = dataset.data[index];
         if (val !== null && val !== undefined && val > 0) {
           ctx.save();
-          ctx.fillStyle = '#f0f6fc';
+          ctx.fillStyle = '#0f172a'; // Texto oscuro para fondo claro
           ctx.font = 'bold 11px Inter, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
@@ -267,27 +268,27 @@ function initCharts() {
         {
           label: 'INFULL Real',
           data: [],
-          borderColor: '#388bfd',
-          backgroundColor: 'rgba(56, 139, 253, 0.15)',
+          borderColor: '#0284c7',
+          backgroundColor: 'rgba(2, 132, 199, 0.08)',
           borderWidth: 2.5,
           tension: 0.25,
           pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 7 : 4),
-          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#388bfd')
+          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#0284c7')
         },
         {
           label: 'ONTIME Real',
           data: [],
-          borderColor: '#39c5cf',
-          backgroundColor: 'rgba(57, 197, 207, 0.15)',
+          borderColor: '#06b6d4',
+          backgroundColor: 'rgba(6, 182, 212, 0.08)',
           borderWidth: 2.5,
           tension: 0.25,
           pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 7 : 4),
-          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#39c5cf')
+          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#06b6d4')
         },
         {
           label: 'Meta INFULL (100%)',
           data: Array(12).fill(100),
-          borderColor: '#d29922',
+          borderColor: '#d97706',
           borderDash: [5, 5],
           borderWidth: 1.8,
           pointRadius: 0
@@ -295,7 +296,7 @@ function initCharts() {
         {
           label: 'Meta ONTIME (87%)',
           data: Array(12).fill(87),
-          borderColor: '#f85149',
+          borderColor: '#dc2626',
           borderDash: [5, 5],
           borderWidth: 1.8,
           pointRadius: 0
@@ -306,7 +307,13 @@ function initCharts() {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        y: { min: 40, max: 105, ticks: { callback: v => v + '%' } }
+        y: { 
+          min: 40, 
+          max: 105, 
+          ticks: { callback: v => v + '%' },
+          grid: { color: 'rgba(0, 0, 0, 0.05)' }
+        },
+        x: { grid: { display: false } }
       }
     }
   });
@@ -320,8 +327,8 @@ function initCharts() {
           type: 'line',
           label: 'META INFULL',
           data: metasInfullProc,
-          borderColor: '#43a047',
-          backgroundColor: '#43a047',
+          borderColor: '#16a34a',
+          backgroundColor: '#16a34a',
           borderWidth: 2.8,
           pointRadius: 2.5,
           tension: 0,
@@ -332,8 +339,8 @@ function initCharts() {
           type: 'bar',
           label: 'INFULL',
           data: [],
-          backgroundColor: '#90caf9',
-          borderColor: '#64b5f6',
+          backgroundColor: '#93c5fd',
+          borderColor: '#60a5fa',
           borderWidth: 1,
           borderRadius: 4,
           barPercentage: 0.55,
@@ -346,7 +353,7 @@ function initCharts() {
       maintainAspectRatio: false,
       layout: { padding: { top: 25, bottom: 5, left: 5, right: 10 } },
       scales: {
-        y: { min: 0, max: 110, ticks: { stepSize: 20, callback: v => (v <= 100 ? v + ' %' : '') }, grid: { color: 'rgba(255, 255, 255, 0.08)' } },
+        y: { min: 0, max: 110, ticks: { stepSize: 20, callback: v => (v <= 100 ? v + ' %' : '') }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false }, ticks: { maxRotation: 35, minRotation: 25, font: { size: 10 } } }
       },
       plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 6, font: { size: 11 } } } }
@@ -362,8 +369,8 @@ function initCharts() {
           type: 'line',
           label: 'META ONTIME',
           data: metasOntimeProc,
-          borderColor: '#81c784',
-          backgroundColor: '#81c784',
+          borderColor: '#22c55e',
+          backgroundColor: '#22c55e',
           borderWidth: 2.8,
           pointRadius: 2.5,
           tension: 0,
@@ -375,8 +382,8 @@ function initCharts() {
           type: 'bar',
           label: 'ONTIME',
           data: [],
-          backgroundColor: '#f47c38',
-          borderColor: '#e66518',
+          backgroundColor: '#fb923c',
+          borderColor: '#f97316',
           borderWidth: 1,
           borderRadius: 4,
           barPercentage: 0.55,
@@ -389,7 +396,7 @@ function initCharts() {
       maintainAspectRatio: false,
       layout: { padding: { top: 25, bottom: 5, left: 5, right: 10 } },
       scales: {
-        y: { min: 0, max: 110, ticks: { stepSize: 20, callback: v => (v <= 100 ? v + ' %' : '') }, grid: { color: 'rgba(255, 255, 255, 0.08)' } },
+        y: { min: 0, max: 110, ticks: { stepSize: 20, callback: v => (v <= 100 ? v + ' %' : '') }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false }, ticks: { maxRotation: 35, minRotation: 25, font: { size: 10 } } }
       },
       plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 6, font: { size: 11 } } } }
@@ -402,13 +409,17 @@ function initCharts() {
     data: {
       labels: ['Ingresadas', 'Solucionadas / Finalizadas', 'Dentro de SLA / En Tiempo'],
       datasets: [
-        { label: 'Solicitudes', data: [], backgroundColor: '#388bfd', borderRadius: 6 },
-        { label: 'Tareas', data: [], backgroundColor: '#a371f7', borderRadius: 6 }
+        { label: 'Solicitudes', data: [], backgroundColor: '#0284c7', borderRadius: 6 },
+        { label: 'Tareas', data: [], backgroundColor: '#8b5cf6', borderRadius: 6 }
       ]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      scales: {
+        y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false } }
+      },
       plugins: { legend: { position: 'top' } }
     }
   });
@@ -421,13 +432,17 @@ function initCharts() {
       datasets: [{
         label: 'Cantidad Acumulada',
         data: [],
-        backgroundColor: ['#388bfd', '#3fb950', '#f85149'],
+        backgroundColor: ['#0284c7', '#16a34a', '#dc2626'],
         borderRadius: 6
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      scales: {
+        y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false } }
+      },
       plugins: { legend: { display: false } }
     }
   });
@@ -439,8 +454,8 @@ function initCharts() {
       labels: ['Advocacy', 'Asesoramiento', 'Difusión', 'Mejora Continua', 'Proyectos'],
       datasets: [{
         data: [],
-        backgroundColor: ['#8b949e', '#388bfd', '#39c5cf', '#484f58', '#d29922'],
-        borderColor: '#161b22',
+        backgroundColor: ['#94a3b8', '#0284c7', '#06b6d4', '#64748b', '#d97706'],
+        borderColor: '#ffffff',
         borderWidth: 2
       }]
     },
@@ -451,7 +466,7 @@ function initCharts() {
     }
   });
 
-  // 7. Áreas Clientes (Colores diferenciados del Flujo Mensual)
+  // 7. Áreas Clientes (Diferenciado cromáticamente)
   chartAreas = new Chart(document.getElementById('chartAreasClientes'), {
     type: 'bar',
     data: {
@@ -460,16 +475,16 @@ function initCharts() {
         { 
           label: '% Solicitudes Recibidas', 
           data: [], 
-          backgroundColor: '#39c5cf', // Turquesa / Cian
-          borderColor: '#29abb5',
+          backgroundColor: '#06b6d4',
+          borderColor: '#0891b2',
           borderWidth: 1,
           borderRadius: 4 
         },
         { 
           label: '% Horas Dedicadas', 
           data: [], 
-          backgroundColor: '#d29922', // Ámbar / Naranja dorado
-          borderColor: '#b0801a',
+          backgroundColor: '#f59e0b',
+          borderColor: '#d97706',
           borderWidth: 1,
           borderRadius: 4 
         }
@@ -478,7 +493,10 @@ function initCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: { y: { ticks: { callback: v => v + '%' } } }
+      scales: { 
+        y: { ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false } }
+      }
     }
   });
 
@@ -490,18 +508,21 @@ function initCharts() {
       datasets: [{
         label: '% Horas Registradas',
         data: [],
-        borderColor: '#3fb950',
-        backgroundColor: 'rgba(63, 185, 80, 0.15)',
+        borderColor: '#16a34a',
+        backgroundColor: 'rgba(22, 163, 74, 0.08)',
         fill: true,
         tension: 0.3,
         pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 8 : 4),
-        pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#3fb950')
+        pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#16a34a')
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: { y: { min: 40, max: 130, ticks: { callback: v => v + '%' } } }
+      scales: { 
+        y: { min: 40, max: 130, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false } }
+      }
     }
   });
 
@@ -514,20 +535,20 @@ function initCharts() {
         {
           label: 'Asesoramiento (Días)',
           data: [],
-          borderColor: '#d29922',
+          borderColor: '#d97706',
           borderWidth: 2.2,
           tension: 0.25,
           pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 7 : 4),
-          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#d29922')
+          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#d97706')
         },
         {
           label: 'Difusión Conoc. (Días)',
           data: [],
-          borderColor: '#a371f7',
+          borderColor: '#7c3aed',
           borderWidth: 2.2,
           tension: 0.25,
           pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 7 : 4),
-          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#a371f7')
+          pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#7c3aed')
         }
       ]
     },
@@ -536,7 +557,7 @@ function initCharts() {
       maintainAspectRatio: false,
       layout: { padding: { top: 15, bottom: 5, left: 5, right: 10 } },
       scales: {
-        y: { min: 0, max: 60, ticks: { stepSize: 15, callback: v => v + ' d' }, grid: { color: 'rgba(255, 255, 255, 0.08)' } },
+        y: { min: 0, max: 60, ticks: { stepSize: 15, callback: v => v + ' d' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false } }
       },
       plugins: {
@@ -555,8 +576,8 @@ function initCharts() {
       datasets: [{
         label: 'Días Promedio',
         data: [],
-        backgroundColor: ['rgba(235, 185, 223, 0.85)', 'rgba(197, 235, 195, 0.85)'],
-        borderColor: ['#d896c8', '#9fd19c'],
+        backgroundColor: ['rgba(244, 114, 182, 0.45)', 'rgba(134, 239, 172, 0.45)'],
+        borderColor: ['#ec4899', '#22c55e'],
         borderWidth: 1.5,
         borderRadius: 6,
         barPercentage: 0.6
@@ -567,8 +588,8 @@ function initCharts() {
       maintainAspectRatio: false,
       layout: { padding: { top: 22, bottom: 5, left: 5, right: 5 } },
       scales: {
-        y: { min: 0, max: 70, ticks: { stepSize: 15, callback: v => v.toFixed(0) + 'd' }, grid: { color: 'rgba(255, 255, 255, 0.08)' } },
-        x: { grid: { display: false }, ticks: { font: { size: 10, weight: '600' }, color: '#c9d1d9' } }
+        y: { min: 0, max: 70, ticks: { stepSize: 15, callback: v => v.toFixed(0) + 'd' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false }, ticks: { font: { size: 10, weight: '600' }, color: '#334155' } }
       },
       plugins: { legend: { display: false } }
     }
@@ -580,7 +601,7 @@ function actualizarDashboardPorMes(mesIdx) {
   const mesNombre = nombresMeses[mesIdx];
   const d = dataPorMes[mesIdx];
 
-  // 1. Textos
+  // 1. Textos y encabezados
   document.getElementById('subtitulo-periodo').textContent = `Área de Legislación Alimentaria — Período: ${mesNombre} 2026`;
   document.getElementById('label-status').textContent = `Datos de ${mesNombre}`;
   

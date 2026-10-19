@@ -261,7 +261,9 @@ body {
   font-weight: 600;
 }
 
-/* Grilla Superior */
+/* =========================================================================
+   GRILLA SUPERIOR (3 COLUMNAS COMPLETAS SIN HUECOS)
+   ========================================================================= */
 .dashboard-main-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -308,7 +310,7 @@ body {
   flex-direction: column;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
   overflow: hidden;
-  min-width: 0; /* Previene desbordes en grid */
+  min-width: 0;
 }
 
 .card-header {
@@ -345,30 +347,26 @@ body {
 }
 
 /* =========================================================================
-   FILA INFERIOR DE 4 GRÁFICOS: ACHICADO EL MES Y EXPANDIDOS LOS TREEMAPS
+   FILA INFERIOR DE 3 GRÁFICOS: TOTALMENTE ADAPTADA AL ANCHO COMPLETO
+   Columna 1 (Evolución Tiempo): 1fr
+   Columna 2 (Treemap Solicitudes): 1.5fr
+   Columna 3 (Treemap Tareas): 1.5fr
    ========================================================================= */
-.four-row-grid {
+.three-row-grid {
   display: grid;
-  grid-template-columns: 1fr 0.85fr 1.6fr 1.6fr;
+  grid-template-columns: 1fr 1.5fr 1.5fr;
   gap: 20px;
   width: 100%;
   margin-bottom: 24px;
 }
 
 .card-evol-rta,
-.card-mes-rta,
 .card-treemap {
   min-width: 0;
 }
 
-@media (max-width: 1400px) {
-  .four-row-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .four-row-grid {
+@media (max-width: 1200px) {
+  .three-row-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -425,7 +423,7 @@ body {
 }
 
 /* =========================================================================
-   MAPA MUNDIAL COROPLÉTICO (SIN DESBORDES NI MARCA DE AGUA)
+   MAPA MUNDIAL COROPLÉTICO
    ========================================================================= */
 .map-section {
   width: 100%;
@@ -471,7 +469,7 @@ body {
 #mapa-novedades {
   width: 100%;
   height: 100%;
-  background-color: #ffffff; /* Océano blanco y limpio */
+  background-color: #ffffff;
 }
 
 /* Leyenda Coroplética */

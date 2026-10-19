@@ -78,7 +78,7 @@ const treemapTareasData = [
 
 // =========================================================================
 // NOVEDADES REGULATORIAS 2026 POR PAÍS Y MES (Vigilancia Regulatoria.xlsm)
-// Códigos ISO-3 estándar para mapeo geográfico mundial
+// Códigos ISO-3 estándar
 // =========================================================================
 const novedadesPorMes = [
   // Enero (0)
@@ -126,13 +126,12 @@ const novedadesPorMes = [
     "ARG": 22, "BRA": 17, "MEX": 15, "CHL": 9, "COL": 7, "URY": 5, "PER": 4, "ECU": 3, "BOL": 3, "PRY": 2,
     "USA": 12, "ESP": 9, "ITA": 6, "DEU": 7, "FRA": 5, "GBR": 8, "CHN": 6, "KOR": 5, "SAU": 4, "VNM": 2, "TUR": 2
   },
-  // Octubre a Diciembre (Proyecciones)
+  // Proyecciones
   { "ARG": 12, "BRA": 8, "MEX": 7, "CHL": 4, "COL": 3, "USA": 5, "ESP": 4 },
   { "ARG": 0, "BRA": 0, "MEX": 0 },
   { "ARG": 0, "BRA": 0, "MEX": 0 }
 ];
 
-// Nombres legibles en español por código ISO-3
 const nombresPaisesES = {
   "ARG": "Argentina", "BRA": "Brasil", "MEX": "México", "CHL": "Chile",
   "COL": "Colombia", "URY": "Uruguay", "PER": "Perú", "ECU": "Ecuador",
@@ -190,22 +189,20 @@ let mapaMundial = null;
 let geojsonLayer = null;
 let geojsonData = null;
 
-// Escala de color estilo mapa coroplético (gradiente de violetas a morados según la imagen)
 function getColorNovedades(d) {
   return d > 15 ? '#581c87' :
          d >= 10 ? '#7e22ce' :
          d >= 5  ? '#a855f7' :
          d >= 2  ? '#c084fc' :
          d >= 1  ? '#e9d5ff' :
-                   '#e2e8f0'; // 0 novedades: gris claro
+                   '#e2e8f0';
 }
 
-// Inicialización del Mapa
+// Inicialización de Mapa sin capas con marcas de agua
 async function initMapa() {
   const mapElement = document.getElementById('mapa-novedades');
   if (!mapElement) return;
 
-  // Mapa centrado con vista mundial limpia y sin marcas de agua
   mapaMundial = L.map('mapa-novedades', {
     center: [20, 0],
     zoom: 2,
@@ -215,7 +212,7 @@ async function initMapa() {
     attributionControl: false
   });
 
-  // Cargamos el GeoJSON de países del mundo directamente
+  // Se eliminó la capa L.tileLayer para remover marcas de agua
   try {
     const res = await fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json');
     geojsonData = await res.json();
@@ -225,7 +222,6 @@ async function initMapa() {
   }
 }
 
-// Actualizar colores y tooltips del mapa por mes
 function actualizarCapaMapa(mesIdx) {
   if (!mapaMundial || !geojsonData) return;
 
@@ -236,7 +232,6 @@ function actualizarCapaMapa(mesIdx) {
   const datosMes = novedadesPorMes[mesIdx] || {};
   let totalMes = 0;
 
-  // Calculamos total de novedades del mes
   Object.values(datosMes).forEach(cant => totalMes += cant);
   const badgeTotal = document.getElementById('badge-total-novedades');
   if (badgeTotal) {
@@ -245,7 +240,7 @@ function actualizarCapaMapa(mesIdx) {
 
   geojsonLayer = L.geoJson(geojsonData, {
     style: function (feature) {
-      const iso = feature.id; // ISO3
+      const iso = feature.id;
       const cantidad = datosMes[iso] || 0;
       return {
         fillColor: getColorNovedades(cantidad),
@@ -261,7 +256,6 @@ function actualizarCapaMapa(mesIdx) {
       const nombreES = nombresPaisesES[iso] || feature.properties.name;
       const cantidad = datosMes[iso] || 0;
 
-      // Tooltip interactivo flotante al pasar el mouse
       layer.bindTooltip(`
         <div class="map-tooltip-content">
           <strong>${nombreES}</strong>
@@ -273,7 +267,6 @@ function actualizarCapaMapa(mesIdx) {
         className: 'custom-map-tooltip'
       });
 
-      // Efecto hover
       layer.on({
         mouseover: function (e) {
           const l = e.target;
@@ -663,7 +656,7 @@ function actualizarDashboardPorMes(mesIdx) {
   const mesNombre = nombresMeses[mesIdx];
   const d = dataPorMes[mesIdx];
 
-  // 1. Textos y etiquetas
+  // 1. Textos y encabezados
   document.getElementById('subtitulo-periodo').textContent = `Área de Legislación Alimentaria — Período: ${mesNombre} 2026`;
   document.getElementById('label-status').textContent = `Datos de ${mesNombre}`;
   
@@ -789,7 +782,7 @@ function actualizarDashboardPorMes(mesIdx) {
   renderTreemap('treemap-solic-container', treemapSolicData, factorSolic);
   renderTreemap('treemap-tareas-container', treemapTareasData, factorTareas);
 
-  // 7. Actualización Reactiva del Mapa Mundial Coroplético
+  // 7. Actualización del Mapa Mundial
   actualizarCapaMapa(mesIdx);
 }
 

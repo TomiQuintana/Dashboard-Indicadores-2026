@@ -21,13 +21,13 @@
 </head>
 <body>
 
-  <!-- Contenedor Maestro para estabilizar todo ante cambios de zoom -->
+  <!-- Contenedor Maestro para estabilizar ante cualquier nivel de zoom -->
   <div class="app-wrapper">
 
-    <!-- Encabezado Fijo (Sticky) Ordenado y Delimitado -->
+    <!-- Encabezado Sticky con Filtro Dual: Mes o Trimestre -->
     <header class="topbar">
       
-      <!-- Fila 1: Título y Filtros -->
+      <!-- Fila 1: Título y Controles de Filtro -->
       <div class="topbar-header-row">
         <div class="brand">
           <div class="logo-badge">2026</div>
@@ -37,10 +37,17 @@
           </div>
         </div>
 
+        <!-- Grupo de Filtros: Modo Mes vs Modo Trimestre -->
         <div class="filter-container">
-          <label for="select-mes" class="filter-label">Filtrar por Mes:</label>
-          <div class="select-wrapper">
-            <select id="select-mes" class="mes-dropdown">
+          <!-- Botones Toggle Mes / Trimestre -->
+          <div class="filter-toggle-group">
+            <button type="button" class="btn-toggle active" id="btn-modo-mes">Por Mes</button>
+            <button type="button" class="btn-toggle" id="btn-modo-trimestre">Por Trimestre</button>
+          </div>
+
+          <!-- Selector de Mes (Visible por defecto) -->
+          <div class="select-wrapper" id="wrapper-select-mes">
+            <select id="select-mes" class="custom-dropdown">
               <option value="0">Enero</option>
               <option value="1">Febrero</option>
               <option value="2">Marzo</option>
@@ -55,13 +62,24 @@
               <option value="11">Diciembre</option>
             </select>
           </div>
+
+          <!-- Selector de Trimestre (Oculto inicialmente) -->
+          <div class="select-wrapper hidden" id="wrapper-select-trimestre">
+            <select id="select-trimestre" class="custom-dropdown">
+              <option value="Q1">Q1 (Ene - Mar)</option>
+              <option value="Q2">Q2 (Abr - Jun)</option>
+              <option value="Q3" selected>Q3 (Jul - Sep)</option>
+              <option value="Q4">Q4 (Oct - Dic)*</option>
+            </select>
+          </div>
+
           <div class="badge-status">
             <span class="status-dot"></span> <span id="label-status">Datos de Septiembre</span>
           </div>
         </div>
       </div>
 
-      <!-- Fila 2: Banner Institucional Fijo y Estable -->
+      <!-- Fila 2: Banner Institucional Fijo -->
       <div class="hero-banner">
         <div class="banner-overlay"></div>
         <img src="banner.jpg" alt="Arcor 75 años" class="banner-img">
@@ -143,7 +161,7 @@
         <!-- 4. Flujo Mensual (Semáforo) -->
         <div class="chart-card col-span-1">
           <div class="card-header">
-            <h3 id="title-flujo">Flujo Mensual: Solicitudes vs Tareas</h3>
+            <h3 id="title-flujo">Flujo: Solicitudes vs Tareas</h3>
             <span class="tag" id="tag-flujo">Septiembre</span>
           </div>
           <div class="chart-wrapper">
@@ -173,7 +191,7 @@
           </div>
         </div>
 
-        <!-- 7. NUEVA UBICACIÓN: % Horas Registradas (Llena el hueco disponible) -->
+        <!-- 7. % Horas Registradas -->
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3>% Horas Registradas</h3>
@@ -195,10 +213,10 @@
           </div>
         </div>
 
-        <!-- 9. Tiempo Promedio del Mes -->
+        <!-- 9. Tiempo Promedio del Período -->
         <div class="chart-card col-span-1">
           <div class="card-header">
-            <h3 id="title-tiempo-mes">Promedio del Mes</h3>
+            <h3 id="title-tiempo-mes">Promedio del Período</h3>
             <span class="tag" id="tag-tiempo-mes">Septiembre</span>
           </div>
           <div class="chart-wrapper">
@@ -208,7 +226,7 @@
 
       </section>
 
-      <!-- Fila de 3 Gráficos Adaptados (Aprovechan todo el ancho sin huecos) -->
+      <!-- Fila de 3 Gráficos Adaptados al Ancho Completo -->
       <section class="three-row-grid">
 
         <!-- 10. Tiempo Promedio (Días) - Evolución -->
@@ -222,7 +240,7 @@
           </div>
         </div>
 
-        <!-- 11. Solicitudes por Área (Treemap Adaptado) -->
+        <!-- 11. Solicitudes por Área (Treemap) -->
         <div class="chart-card card-treemap">
           <div class="card-header">
             <h3 id="title-treemap-solic">Solicitudes por Área</h3>
@@ -231,7 +249,7 @@
           <div class="treemap-container" id="treemap-solic-container"></div>
         </div>
 
-        <!-- 12. Tipo de Tareas (Treemap Adaptado) -->
+        <!-- 12. Tipo de Tareas (Treemap) -->
         <div class="chart-card card-treemap">
           <div class="card-header">
             <h3 id="title-treemap-tareas">Tipo de Tareas</h3>
@@ -248,7 +266,7 @@
           <div class="card-header">
             <div>
               <h3 id="title-mapa-novedades">Vigilancia Regulatoria: Novedades por País</h3>
-              <span class="subtitle-mapa">Pasa el cursor sobre cada país para consultar la cantidad registrada en el mes.</span>
+              <span class="subtitle-mapa">Pasa el cursor sobre cada país para consultar la cantidad registrada en el período.</span>
             </div>
             <div class="map-header-right">
               <span class="badge-total-nov" id="badge-total-novedades">Total Novedades: 0</span>

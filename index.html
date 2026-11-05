@@ -56,8 +56,8 @@
               <option value="5">Junio</option>
               <option value="6">Julio</option>
               <option value="7">Agosto</option>
-              <option value="8" selected>Septiembre</option>
-              <option value="9">Octubre</option>
+              <option value="8">Septiembre</option>
+              <option value="9" selected>Octubre</option>
               <option value="10">Noviembre</option>
               <option value="11">Diciembre</option>
             </select>
@@ -89,36 +89,36 @@
 
     <main class="dashboard-container">
       
-      <!-- Tarjetas Resumen (KPI Cards) -->
+      <!-- Tarjetas Resumen (KPI Cards) con valores iniciales de Octubre -->
       <section class="kpi-grid">
         <div class="kpi-card">
           <span class="kpi-label">Solicitudes Ingresadas</span>
-          <div class="kpi-val" id="kpi-solic">62</div>
-          <span class="kpi-sub" id="kpi-solic-sub">39 Solucionadas (35 en SLA)</span>
+          <div class="kpi-val" id="kpi-solic">58</div>
+          <span class="kpi-sub" id="kpi-solic-sub">39 Solucionadas (37 en SLA)</span>
         </div>
 
         <div class="kpi-card">
           <span class="kpi-label">Tareas Ingresadas</span>
-          <div class="kpi-val" id="kpi-tareas">147</div>
-          <span class="kpi-sub" id="kpi-tareas-sub">135 Finalizadas (133 a tiempo)</span>
+          <div class="kpi-val" id="kpi-tareas">153</div>
+          <span class="kpi-sub" id="kpi-tareas-sub">151 Finalizadas (149 a tiempo)</span>
         </div>
 
         <div class="kpi-card alert" id="card-infull">
           <span class="kpi-label">INFULL Global</span>
-          <div class="kpi-val" id="kpi-infull">62.9%</div>
-          <span class="kpi-sub neg" id="kpi-infull-sub">Meta: 100.0% (-37.1%)</span>
+          <div class="kpi-val" id="kpi-infull">67.2%</div>
+          <span class="kpi-sub neg" id="kpi-infull-sub">Meta: 100.0% (-32.8%)</span>
         </div>
 
         <div class="kpi-card alert" id="card-ontime">
           <span class="kpi-label">ONTIME Global</span>
-          <div class="kpi-val" id="kpi-ontime">56.5%</div>
-          <span class="kpi-sub neg" id="kpi-ontime-sub">Meta: 87.0% (-30.5%)</span>
+          <div class="kpi-val" id="kpi-ontime">63.8%</div>
+          <span class="kpi-sub neg" id="kpi-ontime-sub">Meta: 87.0% (-23.2%)</span>
         </div>
 
         <div class="kpi-card danger" id="card-backlog">
           <span class="kpi-label">Backlog Vencido</span>
-          <div class="kpi-val" id="kpi-backlog">39</div>
-          <span class="kpi-sub" id="kpi-backlog-sub">Total Acumulado: 71</span>
+          <div class="kpi-val" id="kpi-backlog">6</div>
+          <span class="kpi-sub" id="kpi-backlog-sub">Total Acumulado: 52</span>
         </div>
       </section>
 

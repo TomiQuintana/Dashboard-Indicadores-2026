@@ -2,9 +2,10 @@
  * Tablero de Control de Indicadores 2026
  * Archivo: app.js
  * 
+ * - Actualizado con los datos de Octubre 2026.
  * - Soporte para Filtro por Mes (Ene - Dic) y Filtro por Trimestre (Q1 - Q4).
- * - En Q4 (Oct - Dic), indicadores operativos muestran 0 / Sin registros,
- *   y el mapa mundial refleja exclusivamente las 22 novedades de Octubre 2026.
+ * - Gráficos combinados (Real en Barras + Metas en Línea).
+ * - Treemaps dinámicos y Mapa Mundial Coroplético de Vigilancia Regulatoria.
  */
 
 Chart.defaults.color = '#475569';
@@ -33,77 +34,74 @@ const procesosLabels = [
 const metasInfullProc = [100, 100, 99.6, 98.0, 100, 100];
 const metasOntimeProc = [null, 91.0, 81.0, null, null, 87.0];
 
+// Series históricas de evolución anual (Ene - Oct 2026)
 const historicoEvolucion = {
-  infull: [99.1, 95.2, 97.4, 98.7, 96.9, 76.5, 81.0, 75.4, 62.9, null, null, null],
-  ontime: [92.2, 84.1, 88.2, 87.0, 86.2, 74.1, 74.6, 71.9, 56.5, null, null, null],
-  horasReg: [67, 62, 64, 90, 119, 71, 67, 68, 65, null, null, null],
-  tiempoAses: [15.17, 22.48, 9.61, 9.66, 11.07, 9.66, 7.87, 8.62, 7.02, null, null, null],
-  tiempoDif: [52.74, 26.82, 21.83, 12.67, 18.21, 26.42, 12.36, 9.92, 3.40, null, null, null]
+  infull: [99.1, 95.2, 97.4, 98.7, 96.9, 76.5, 81.0, 75.4, 62.9, 67.2, null, null],
+  ontime: [92.2, 84.1, 88.2, 87.0, 86.2, 74.1, 74.6, 71.9, 56.5, 63.8, null, null],
+  horasReg: [67, 62, 64, 90, 119, 71, 67, 68, 65, 51, null, null],
+  tiempoAses: [15.17, 22.48, 9.61, 9.66, 11.07, 9.66, 7.87, 8.62, 7.02, 5.22, null, null],
+  tiempoDif: [52.74, 26.82, 21.83, 12.67, 18.21, 26.42, 12.36, 9.92, 3.40, 14.42, null, null]
 };
 
 // Treemaps base
 const treemapSolicData = [
-  { label: 'ALA', valor: 16, color: '#1f618d' },
-  { label: 'I+D Bagley', valor: 9, color: '#0288d1' },
-  { label: 'I+D Alimentos', valor: 9, color: '#2e7d32' },
-  { label: 'I+D Brasil', valor: 4, color: '#1b5e20' },
-  { label: 'Sin valor', valor: 4, color: '#7b1fa2' },
-  { label: 'I+D Confectionary', valor: 4, color: '#9c27b0' },
-  { label: 'I+D México', valor: 3, color: '#0d381e' },
-  { label: 'Op Comex', valor: 3, color: '#0288d1' },
-  { label: 'Calidad Alimentos', valor: 2, color: '#006064' },
-  { label: 'ALA Interno', valor: 2, color: '#d84315' },
-  { label: 'I+D Chile', valor: 1, color: '#102a43' },
-  { label: 'I+D Ingrecor', valor: 1, color: '#a04000' },
-  { label: 'MKT Confectionary', valor: 1, color: '#1e4620' },
-  { label: 'Comex', valor: 1, color: '#1a365d' },
-  { label: 'RT Bolivia', valor: 1, color: '#388e3c' },
-  { label: 'COMEX', valor: 1, color: '#00838f' }
+  { label: 'ALA', valor: 19, color: '#1f618d' },
+  { label: 'I+D Bagley', valor: 8, color: '#0288d1' },
+  { label: 'I+D Alimentos', valor: 7, color: '#2e7d32' },
+  { label: 'Sin valor', valor: 6, color: '#7b1fa2' },
+  { label: 'Comex', valor: 4, color: '#1a365d' },
+  { label: 'I+D Brasil', valor: 3, color: '#1b5e20' },
+  { label: 'MKT Confectionary', valor: 2, color: '#1e4620' },
+  { label: 'I+D Ingrecor', valor: 2, color: '#a04000' },
+  { label: 'MKT Bagley', valor: 2, color: '#e65100' },
+  { label: 'I+D Funcionales', valor: 1, color: '#00838f' },
+  { label: 'Calidad Alimentos', valor: 1, color: '#006064' },
+  { label: 'Op Comex', valor: 1, color: '#0288d1' },
+  { label: 'Calidad Bagley', valor: 1, color: '#d84315' }
 ];
 
 const treemapTareasData = [
-  { label: 'Reunión/Participación en Espacios', valor: 33, color: '#1a5276' },
-  { label: 'Actualizar/modificar documento', valor: 28, color: '#d35400' },
-  { label: 'Consulta a exter o inter/Solic. a prove.', valor: 26, color: '#145a32' },
-  { label: 'Estudio e incorporar la reglamentación', valor: 20, color: '#1e8449' },
-  { label: 'Revisar Información', valor: 15, color: '#196f3d' },
-  { label: 'Búsqueda de reglamentación', valor: 8, color: '#27ae60' },
-  { label: 'Comunicar novedades', valor: 8, color: '#0e6251' },
-  { label: 'Estudio de impacto para la Compañía', valor: 7, color: '#ba4a00' },
-  { label: 'Ejecución de actividad', valor: 7, color: '#8e44ad' },
-  { label: 'Generación de criterios', valor: 5, color: '#239b56' },
-  { label: 'Búsqueda de información asociada al tema', valor: 3, color: '#2980b9' },
-  { label: 'Capacitación', valor: 2, color: '#21618c' },
-  { label: 'Interconsulta a otras áreas', valor: 2, color: '#5b2c6f' },
-  { label: 'Pago a proveedores', valor: 1, color: '#e67e22' },
-  { label: 'Tratamiento de desvíos / Reclamos', valor: 1, color: '#d81b60' }
+  { label: 'Reunión/Participación de espacios', valor: 46, color: '#1a5276' },
+  { label: 'Revisar Información', valor: 20, color: '#196f3d' },
+  { label: 'Actualizar/modificar documento', valor: 13, color: '#d35400' },
+  { label: 'Estudiar e incorporar reglamentación', valor: 13, color: '#1e8449' },
+  { label: 'Ejecución de actividad', valor: 12, color: '#8e44ad' },
+  { label: 'Generación de criterios', valor: 8, color: '#239b56' },
+  { label: 'Estudio de impacto para Compañía', valor: 8, color: '#ba4a00' },
+  { label: 'Consulta a externos/proveedores', valor: 7, color: '#145a32' },
+  { label: 'Interconsulta a otras áreas', valor: 5, color: '#5b2c6f' },
+  { label: 'Comunicar Interesados', valor: 5, color: '#0e6251' },
+  { label: 'Búsqueda de información', valor: 5, color: '#2980b9' },
+  { label: 'Pago a proveedores', valor: 5, color: '#e67e22' },
+  { label: 'Búsqueda de reglamentación', valor: 4, color: '#27ae60' },
+  { label: 'Capacitación', valor: 3, color: '#21618c' }
 ];
 
-// Novedades Regulatorias por Mes (Vigilancia Regulatoria.xlsm)
+// Novedades Regulatorias por Mes
 const novedadesPorMes = [
-  // Enero (0)
+  // Ene (0)
   { "ARG": 18, "BRA": 14, "MEX": 12, "CHL": 6, "COL": 5, "URY": 4, "PER": 3, "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 4, "KOR": 2, "SAU": 1 },
-  // Febrero (1)
+  // Feb (1)
   { "ARG": 15, "BRA": 11, "MEX": 9, "CHL": 5, "COL": 4, "URY": 3, "PER": 2, "USA": 7, "ESP": 5, "ITA": 2, "DEU": 3, "FRA": 2, "GBR": 4, "CHN": 3, "KOR": 1, "SAU": 1 },
-  // Marzo (2)
+  // Mar (2)
   { "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 4, "COL": 5, "URY": 2, "PER": 3, "USA": 9, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 4, "GBR": 6, "CHN": 2, "KOR": 2, "SAU": 2 },
-  // Abril (3)
+  // Abr (3)
   { "ARG": 14, "BRA": 10, "MEX": 8, "CHL": 5, "COL": 3, "URY": 2, "PER": 2, "USA": 6, "ESP": 4, "ITA": 3, "DEU": 3, "FRA": 2, "GBR": 3, "CHN": 1, "KOR": 1, "SAU": 0 },
-  // Mayo (4)
+  // May (4)
   { "ARG": 20, "BRA": 15, "MEX": 14, "CHL": 7, "COL": 6, "URY": 4, "PER": 4, "USA": 11, "ESP": 8, "ITA": 5, "DEU": 6, "FRA": 4, "GBR": 7, "CHN": 5, "KOR": 3, "SAU": 2 },
-  // Junio (5)
+  // Jun (5)
   { "ARG": 17, "BRA": 13, "MEX": 11, "CHL": 6, "COL": 4, "URY": 3, "PER": 3, "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 1 },
-  // Julio (6)
+  // Jul (6)
   { "ARG": 19, "BRA": 14, "MEX": 13, "CHL": 8, "COL": 5, "URY": 3, "PER": 4, "USA": 10, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 3, "GBR": 6, "CHN": 4, "KOR": 4, "SAU": 2 },
-  // Agosto (7)
+  // Ago (7)
   { "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 6, "COL": 4, "URY": 2, "PER": 3, "USA": 9, "ESP": 5, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 3 },
-  // Septiembre (8)
+  // Sep (8)
   { "ARG": 22, "BRA": 17, "MEX": 15, "CHL": 9, "COL": 7, "URY": 5, "PER": 4, "ECU": 3, "BOL": 3, "PRY": 2, "USA": 12, "ESP": 9, "ITA": 6, "DEU": 7, "FRA": 5, "GBR": 8, "CHN": 6, "KOR": 5, "SAU": 4, "VNM": 2, "TUR": 2 },
-  // Octubre (9) -> 22 novedades exactas de la hoja DF-VigReg2026
+  // Oct (9) -> 22 novedades exactas
   { "ARG": 8, "SAU": 4, "ESP": 1, "FRA": 1, "DEU": 1, "CHL": 1, "ECU": 1, "GTM": 1, "MAR": 1, "USA": 1, "BRA": 1, "SRB": 1 },
-  // Noviembre (10)
+  // Nov (10)
   {},
-  // Diciembre (11)
+  // Dic (11)
   {}
 ];
 
@@ -137,17 +135,33 @@ const dataPorMes = [
   { solicIng: 57, solicSol: 43, solicSla: 41, tareasIng: 139, tareasFin: 130, tareasOntime: 127, infullGlobal: 75.4, ontimeGlobal: 71.9, infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4], ontimeProc: [null, 73.0, 71.5, null, null, 71.9], backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, horasProc: [6.0, 135.0, 125.0, 8.0, 22.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7], areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6] },
   // Septiembre (8)
   { solicIng: 62, solicSol: 39, solicSla: 35, tareasIng: 147, tareasFin: 135, tareasOntime: 133, infullGlobal: 62.9, ontimeGlobal: 56.5, infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0, 123.5, 112.25, 0, 6.1], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] },
-  // Octubre (9)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
+  // Octubre (9) - Actualizado con el nuevo Excel
+  { 
+    solicIng: 58, 
+    solicSol: 39, 
+    solicSla: 37, 
+    tareasIng: 153, 
+    tareasFin: 151, 
+    tareasOntime: 149, 
+    infullGlobal: 67.2, 
+    ontimeGlobal: 63.8, 
+    infullProc: [0, 78.9, 50.0, 0, 0, 67.2], 
+    ontimeProc: [0, 76.3, 44.4, 0, 0, 63.8], 
+    backlogTotal: 52, // 46 no vencidos + 6 vencidos
+    backlogNoVenc: 46, 
+    backlogVenc: 6, 
+    horasProc: [0, 107.7, 142.5, 31.0, 27.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], 
+    areasHoras: [3.16, 7.04, 8.66, 2.19, 0.50, 0.42, 0.98] 
+  },
   // Noviembre (10)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 52, backlogNoVenc: 46, backlogVenc: 6, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
   // Diciembre (11)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 52, backlogNoVenc: 46, backlogVenc: 6, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
 
-// =========================================================================
-// CONSOLIDACIÓN TRIMESTRAL AUTOMÁTICA
-// =========================================================================
+// Consolidación trimestral automática
 function calcularDatosTrimestre(mesesIndices) {
   let solicIng = 0, solicSol = 0, solicSla = 0;
   let tareasIng = 0, tareasFin = 0, tareasOntime = 0;
@@ -167,8 +181,7 @@ function calcularDatosTrimestre(mesesIndices) {
     }
   });
 
-  // El backlog toma el estado del último mes con actividad del trimestre
-  const ultimoMesConDatos = [...mesesIndices].reverse().find(idx => dataPorMes[idx].backlogTotal > 0) ?? mesesIndices[0];
+  const ultimoMesConDatos = [...mesesIndices].reverse().find(idx => dataPorMes[idx].solicIng > 0) ?? mesesIndices[0];
   backlogTotal = dataPorMes[ultimoMesConDatos].backlogTotal;
   backlogNoVenc = dataPorMes[ultimoMesConDatos].backlogNoVenc;
   backlogVenc = dataPorMes[ultimoMesConDatos].backlogVenc;
@@ -176,7 +189,6 @@ function calcularDatosTrimestre(mesesIndices) {
   const infullGlobal = solicIng > 0 ? Number(((solicSol / solicIng) * 100).toFixed(1)) : 0;
   const ontimeGlobal = solicIng > 0 ? Number(((solicSla / solicIng) * 100).toFixed(1)) : 0;
 
-  // Promedio ponderado para INFULL y ONTIME por proceso
   const infullProc = dataPorMes[ultimoMesConDatos].infullProc;
   const ontimeProc = dataPorMes[ultimoMesConDatos].ontimeProc;
 
@@ -197,21 +209,9 @@ const dataTrimestres = {
   "Q1": calcularDatosTrimestre([0, 1, 2]),
   "Q2": calcularDatosTrimestre([3, 4, 5]),
   "Q3": calcularDatosTrimestre([6, 7, 8]),
-  "Q4": {
-    solicIng: 0, solicSol: 0, solicSla: 0,
-    tareasIng: 0, tareasFin: 0, tareasOntime: 0,
-    infullGlobal: 0, ontimeGlobal: 0,
-    infullProc: [0, 0, 0, 0, 0, 0],
-    ontimeProc: [0, 0, 0, 0, 0, 0],
-    backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39,
-    horasProc: [0, 0, 0, 0, 0],
-    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
-    areasSolic: [0, 0, 0, 0, 0, 0, 0],
-    areasHoras: [0, 0, 0, 0, 0, 0, 0]
-  }
+  "Q4": calcularDatosTrimestre([9, 10, 11]) // Ahora incluye los datos reales de Octubre
 };
 
-// Consolidación de novedades por trimestre
 function consolidarNovedadesTrimestre(indices) {
   const result = {};
   indices.forEach(idx => {
@@ -227,7 +227,7 @@ const novedadesPorTrimestre = {
   "Q1": consolidarNovedadesTrimestre([0, 1, 2]),
   "Q2": consolidarNovedadesTrimestre([3, 4, 5]),
   "Q3": consolidarNovedadesTrimestre([6, 7, 8]),
-  "Q4": novedadesPorMes[9] // Exclusivamente las 22 novedades registradas de Octubre
+  "Q4": novedadesPorMes[9] // 22 novedades de Octubre
 };
 
 const pluginValoresEnBarras = {
@@ -255,9 +255,9 @@ const pluginValoresEnBarras = {
 };
 
 let chartMetas, chartInfull, chartOntime, chartFlujos, chartBacklog, chartHoras, chartAreas, chartHorasReg, chartTiempoRta, chartTiempoMes;
-let modoFiltro = 'mes'; // 'mes' o 'trimestre'
-let currentSelectedMonth = 8; // Septiembre por defecto
-let currentSelectedQuarter = 'Q3'; // Q3 por defecto
+let modoFiltro = 'mes'; 
+let currentSelectedMonth = 9; // Octubre por defecto
+let currentSelectedQuarter = 'Q4'; 
 
 let mapaMundial = null;
 let geojsonLayer = null;
@@ -439,7 +439,7 @@ function initCharts() {
     }
   });
 
-  // 2. INFULL por Proceso
+  // 2. INFULL por Proceso (Combinado)
   chartInfull = new Chart(document.getElementById('chartInfullProceso'), {
     data: {
       labels: procesosLabels,
@@ -481,7 +481,7 @@ function initCharts() {
     }
   });
 
-  // 3. ONTIME por Proceso
+  // 3. ONTIME por Proceso (Combinado)
   chartOntime = new Chart(document.getElementById('chartOntimeProceso'), {
     data: {
       labels: procesosLabels,
@@ -524,7 +524,7 @@ function initCharts() {
     }
   });
 
-  // 4. Flujo (Semáforo)
+  // 4. Flujo
   chartFlujos = new Chart(document.getElementById('chartFlujos'), {
     type: 'bar',
     plugins: [pluginValoresEnBarras],
@@ -690,7 +690,7 @@ function initCharts() {
     }
   });
 
-  // 10. Tiempo Promedio Respuesta
+  // 10. Tiempo Promedio Respuesta del Período
   chartTiempoMes = new Chart(document.getElementById('chartTiempoRespuestaMes'), {
     type: 'bar',
     plugins: [pluginValoresEnBarras],
@@ -719,7 +719,6 @@ function initCharts() {
   });
 }
 
-// Función principal de actualización reactiva
 function actualizarDashboard() {
   let d, labelPeriodo, mesCorte;
 
@@ -738,11 +737,11 @@ function actualizarDashboard() {
                currentSelectedQuarter === 'Q3' ? 8 : 11;
   }
 
-  // 1. Textos y encabezados
+  // 1. Textos
   document.getElementById('subtitulo-periodo').textContent = `Área de Legislación Alimentaria — Período: ${labelPeriodo} 2026`;
   document.getElementById('label-status').textContent = `Datos de ${labelPeriodo}`;
   
-  const rangoTexto = `Ene - ${nombresMesesAbrev[Math.min(mesCorte, 8)]} 2026`;
+  const rangoTexto = `Ene - ${nombresMesesAbrev[Math.min(mesCorte, 9)]} 2026`;
   ['tag-evolucion', 'tag-tiempo-resp', 'tag-horas-reg'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = rangoTexto;
@@ -764,9 +763,7 @@ function actualizarDashboard() {
 
   const titleMapa = document.getElementById('title-mapa-novedades');
   if (titleMapa) {
-    titleMapa.textContent = (modoFiltro === 'trimestre' && currentSelectedQuarter === 'Q4')
-      ? `Vigilancia Regulatoria: Novedades por País - Q4 (Octubre Registrado 2026)`
-      : `Vigilancia Regulatoria: Novedades por País - ${labelPeriodo} 2026`;
+    titleMapa.textContent = `Vigilancia Regulatoria: Novedades por País - ${labelPeriodo} 2026`;
   }
 
   // 2. Tarjetas KPIs
@@ -861,10 +858,9 @@ function actualizarDashboard() {
     valorAses = historicoEvolucion.tiempoAses[currentSelectedMonth] ?? 0;
     valorDif = historicoEvolucion.tiempoDif[currentSelectedMonth] ?? 0;
   } else {
-    // Promedio del trimestre
     const mesesTrim = currentSelectedQuarter === 'Q1' ? [0, 1, 2] :
                       currentSelectedQuarter === 'Q2' ? [3, 4, 5] :
-                      currentSelectedQuarter === 'Q3' ? [6, 7, 8] : [];
+                      currentSelectedQuarter === 'Q3' ? [6, 7, 8] : [9];
     if (mesesTrim.length > 0) {
       const sumAses = mesesTrim.reduce((acc, m) => acc + (historicoEvolucion.tiempoAses[m] || 0), 0);
       const sumDif = mesesTrim.reduce((acc, m) => acc + (historicoEvolucion.tiempoDif[m] || 0), 0);
@@ -876,12 +872,12 @@ function actualizarDashboard() {
   chartTiempoMes.update();
 
   // 6. Treemaps Dinámicos
-  const factorSolic = d.solicIng > 0 ? (d.solicIng / 62) : 0;
-  const factorTareas = d.tareasIng > 0 ? (d.tareasIng / 147) : 0;
+  const factorSolic = d.solicIng > 0 ? (d.solicIng / 58) : 0;
+  const factorTareas = d.tareasIng > 0 ? (d.tareasIng / 153) : 0;
   renderTreemap('treemap-solic-container', treemapSolicData, factorSolic);
   renderTreemap('treemap-tareas-container', treemapTareasData, factorTareas);
 
-  // 7. Actualización del Mapa Mundial
+  // 7. Mapa Mundial
   actualizarCapaMapa();
 }
 
@@ -896,7 +892,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectMes = document.getElementById('select-mes');
   const selectTrimestre = document.getElementById('select-trimestre');
 
-  // Alternar a modo mes
   btnModoMes.addEventListener('click', () => {
     modoFiltro = 'mes';
     btnModoMes.classList.add('active');
@@ -906,7 +901,6 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarDashboard();
   });
 
-  // Alternar a modo trimestre
   btnModoTrimestre.addEventListener('click', () => {
     modoFiltro = 'trimestre';
     btnModoTrimestre.classList.add('active');
@@ -926,6 +920,6 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarDashboard();
   });
 
-  // Carga inicial
+  // Inicializa con Octubre seleccionado
   actualizarDashboard();
 });

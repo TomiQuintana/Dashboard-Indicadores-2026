@@ -811,7 +811,7 @@ function actualizarDashboard() {
   }
 
   document.getElementById('kpi-backlog').textContent = d.backlogVenc;
-  document.getElementById('kpi-backlog-sub').textContent = `BacklogTotal Acumulado: ${d.backlogTotal}`;
+  document.getElementById('kpi-backlog-sub').textContent = `Backlog Total Acumulado: ${d.backlogTotal}`;
 
   // 3. Evolución Dinámica
   const serieInfullHastaCorte = historicoEvolucion.infull.map((val, idx) => (idx <= mesCorte ? val : null));

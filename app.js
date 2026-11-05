@@ -2,7 +2,7 @@
  * Tablero de Control de Indicadores 2026
  * Archivo: app.js
  * 
- * - Actualizado con los datos de Octubre 2026.
+ * - Actualizado con los datos de Octubre 2026 (30 novedades en Vigilancia Regulatoria).
  * - Soporte para Filtro por Mes (Ene - Dic) y Filtro por Trimestre (Q1 - Q4).
  * - Gráficos combinados (Real en Barras + Metas en Línea).
  * - Treemaps dinámicos y Mapa Mundial Coroplético de Vigilancia Regulatoria.
@@ -77,7 +77,7 @@ const treemapTareasData = [
   { label: 'Capacitación', valor: 3, color: '#21618c' }
 ];
 
-// Novedades Regulatorias por Mes
+// Novedades Regulatorias por Mes (DF-VigReg2026 - Vigilancia Regulatoria.xlsm)
 const novedadesPorMes = [
   // Ene (0)
   { "ARG": 18, "BRA": 14, "MEX": 12, "CHL": 6, "COL": 5, "URY": 4, "PER": 3, "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 4, "KOR": 2, "SAU": 1 },
@@ -97,8 +97,25 @@ const novedadesPorMes = [
   { "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 6, "COL": 4, "URY": 2, "PER": 3, "USA": 9, "ESP": 5, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 3 },
   // Sep (8)
   { "ARG": 22, "BRA": 17, "MEX": 15, "CHL": 9, "COL": 7, "URY": 5, "PER": 4, "ECU": 3, "BOL": 3, "PRY": 2, "USA": 12, "ESP": 9, "ITA": 6, "DEU": 7, "FRA": 5, "GBR": 8, "CHN": 6, "KOR": 5, "SAU": 4, "VNM": 2, "TUR": 2 },
-  // Oct (9) -> 22 novedades exactas
-  { "ARG": 8, "SAU": 4, "ESP": 1, "FRA": 1, "DEU": 1, "CHL": 1, "ECU": 1, "GTM": 1, "MAR": 1, "USA": 1, "BRA": 1, "SRB": 1 },
+  // Oct (9) -> 30 novedades exactas actualizadas del nuevo Excel
+  { 
+    "ARG": 8, 
+    "ESP": 2, 
+    "FRA": 2, 
+    "DEU": 2, 
+    "ITA": 2, 
+    "SAU": 3, 
+    "PER": 2, 
+    "CHN": 1, 
+    "USA": 1, 
+    "BRA": 1, 
+    "CHL": 1, 
+    "ECU": 1, 
+    "GTM": 1, 
+    "MAR": 1, 
+    "SRB": 1, 
+    "CPV": 1 
+  },
   // Nov (10)
   {},
   // Dic (11)
@@ -112,7 +129,8 @@ const nombresPaisesES = {
   "ESP": "España", "ITA": "Italia", "DEU": "Alemania", "FRA": "Francia",
   "GBR": "Reino Unido", "CHN": "China", "KOR": "Corea del Sur",
   "SAU": "Arabia Saudita", "VNM": "Vietnam", "TUR": "Turquía",
-  "GTM": "Guatemala", "MAR": "Marruecos", "SRB": "Serbia"
+  "GTM": "Guatemala", "MAR": "Marruecos", "SRB": "Serbia",
+  "CPV": "Cabo Verde"
 };
 
 // Datos mensuales base (Indicadores del area por mes 2026.xlsx)
@@ -135,7 +153,6 @@ const dataPorMes = [
   { solicIng: 57, solicSol: 43, solicSla: 41, tareasIng: 139, tareasFin: 130, tareasOntime: 127, infullGlobal: 75.4, ontimeGlobal: 71.9, infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4], ontimeProc: [null, 73.0, 71.5, null, null, 71.9], backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, horasProc: [6.0, 135.0, 125.0, 8.0, 22.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7], areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6] },
   // Septiembre (8)
   { solicIng: 62, solicSol: 39, solicSla: 35, tareasIng: 147, tareasFin: 135, tareasOntime: 133, infullGlobal: 62.9, ontimeGlobal: 56.5, infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0, 123.5, 112.25, 0, 6.1], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] },
-  // Octubre (9) - Actualizado con el nuevo Excel
   // Octubre (9)
   { 
     solicIng: 58, 
@@ -148,9 +165,9 @@ const dataPorMes = [
     ontimeGlobal: 63.8, 
     infullProc: [0, 78.9, 50.0, 0, 0, 67.2], 
     ontimeProc: [0, 76.3, 44.4, 0, 0, 63.8], 
-    backlogTotal: 90,   // 71 (Sep) + 19 (Oct)
-    backlogNoVenc: 45,  // 32 (Sep) + 13 (Oct)
-    backlogVenc: 45,    // 39 (Sep) + 6 (Oct)
+    backlogTotal: 90, 
+    backlogNoVenc: 45, 
+    backlogVenc: 45, 
     horasProc: [0, 107.7, 142.5, 31.0, 27.0], 
     areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
     areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], 
@@ -210,7 +227,7 @@ const dataTrimestres = {
   "Q1": calcularDatosTrimestre([0, 1, 2]),
   "Q2": calcularDatosTrimestre([3, 4, 5]),
   "Q3": calcularDatosTrimestre([6, 7, 8]),
-  "Q4": calcularDatosTrimestre([9, 10, 11]) // Ahora incluye los datos reales de Octubre
+  "Q4": calcularDatosTrimestre([9, 10, 11])
 };
 
 function consolidarNovedadesTrimestre(indices) {
@@ -228,7 +245,7 @@ const novedadesPorTrimestre = {
   "Q1": consolidarNovedadesTrimestre([0, 1, 2]),
   "Q2": consolidarNovedadesTrimestre([3, 4, 5]),
   "Q3": consolidarNovedadesTrimestre([6, 7, 8]),
-  "Q4": novedadesPorMes[9] // 22 novedades de Octubre
+  "Q4": novedadesPorMes[9] // 30 novedades de Octubre
 };
 
 const pluginValoresEnBarras = {

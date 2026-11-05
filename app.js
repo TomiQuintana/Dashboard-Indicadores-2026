@@ -136,6 +136,7 @@ const dataPorMes = [
   // Septiembre (8)
   { solicIng: 62, solicSol: 39, solicSla: 35, tareasIng: 147, tareasFin: 135, tareasOntime: 133, infullGlobal: 62.9, ontimeGlobal: 56.5, infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0, 123.5, 112.25, 0, 6.1], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] },
   // Octubre (9) - Actualizado con el nuevo Excel
+  // Octubre (9)
   { 
     solicIng: 58, 
     solicSol: 39, 
@@ -147,9 +148,9 @@ const dataPorMes = [
     ontimeGlobal: 63.8, 
     infullProc: [0, 78.9, 50.0, 0, 0, 67.2], 
     ontimeProc: [0, 76.3, 44.4, 0, 0, 63.8], 
-    backlogTotal: 52, // 46 no vencidos + 6 vencidos
-    backlogNoVenc: 46, 
-    backlogVenc: 6, 
+    backlogTotal: 90,   // 71 (Sep) + 19 (Oct)
+    backlogNoVenc: 45,  // 32 (Sep) + 13 (Oct)
+    backlogVenc: 45,    // 39 (Sep) + 6 (Oct)
     horasProc: [0, 107.7, 142.5, 31.0, 27.0], 
     areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
     areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], 

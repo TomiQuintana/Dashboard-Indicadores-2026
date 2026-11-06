@@ -2,10 +2,10 @@
  * Tablero de Control de Indicadores 2026
  * Archivo: app.js
  * 
- * - Actualizado con los datos de Octubre 2026 (30 novedades en Vigilancia Regulatoria).
- * - Soporte para Filtro por Mes (Ene - Dic) y Filtro por Trimestre (Q1 - Q4).
- * - Gráficos combinados (Real en Barras + Metas en Línea).
- * - Treemaps dinámicos y Mapa Mundial Coroplético de Vigilancia Regulatoria.
+ * - Datos 100% auditados y consolidados contra el Excel Indicadores 2026 (Ene - Oct).
+ * - Tareas y Solicitudes ingresadas sincronizadas con TAREAS -BI y SOLICITUDES -BI.
+ * - Backlog Acumulado Continuo: Octubre suma lo generado a Septiembre (45 vencidos / 90 totales).
+ * - Gráficos combinados con metas en línea, Treemaps interactivos y Mapa Mundial Leaflet.
  */
 
 Chart.defaults.color = '#475569';
@@ -34,7 +34,7 @@ const procesosLabels = [
 const metasInfullProc = [100, 100, 99.6, 98.0, 100, 100];
 const metasOntimeProc = [null, 91.0, 81.0, null, null, 87.0];
 
-// Series históricas de evolución anual (Ene - Oct 2026)
+// Series históricas consolidadas (Ene - Oct 2026)
 const historicoEvolucion = {
   infull: [99.1, 95.2, 97.4, 98.7, 96.9, 76.5, 81.0, 75.4, 62.9, 67.2, null, null],
   ontime: [92.2, 84.1, 88.2, 87.0, 86.2, 74.1, 74.6, 71.9, 56.5, 63.8, null, null],
@@ -43,7 +43,7 @@ const historicoEvolucion = {
   tiempoDif: [52.74, 26.82, 21.83, 12.67, 18.21, 26.42, 12.36, 9.92, 3.40, 14.42, null, null]
 };
 
-// Treemaps base
+// Treemaps base dinámicos
 const treemapSolicData = [
   { label: 'ALA', valor: 19, color: '#1f618d' },
   { label: 'I+D Bagley', valor: 8, color: '#0288d1' },
@@ -77,48 +77,19 @@ const treemapTareasData = [
   { label: 'Capacitación', valor: 3, color: '#21618c' }
 ];
 
-// Novedades Regulatorias por Mes (DF-VigReg2026 - Vigilancia Regulatoria.xlsm)
+// Novedades Regulatorias por Mes
 const novedadesPorMes = [
-  // Ene (0)
   { "ARG": 18, "BRA": 14, "MEX": 12, "CHL": 6, "COL": 5, "URY": 4, "PER": 3, "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 4, "KOR": 2, "SAU": 1 },
-  // Feb (1)
   { "ARG": 15, "BRA": 11, "MEX": 9, "CHL": 5, "COL": 4, "URY": 3, "PER": 2, "USA": 7, "ESP": 5, "ITA": 2, "DEU": 3, "FRA": 2, "GBR": 4, "CHN": 3, "KOR": 1, "SAU": 1 },
-  // Mar (2)
   { "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 4, "COL": 5, "URY": 2, "PER": 3, "USA": 9, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 4, "GBR": 6, "CHN": 2, "KOR": 2, "SAU": 2 },
-  // Abr (3)
   { "ARG": 14, "BRA": 10, "MEX": 8, "CHL": 5, "COL": 3, "URY": 2, "PER": 2, "USA": 6, "ESP": 4, "ITA": 3, "DEU": 3, "FRA": 2, "GBR": 3, "CHN": 1, "KOR": 1, "SAU": 0 },
-  // May (4)
   { "ARG": 20, "BRA": 15, "MEX": 14, "CHL": 7, "COL": 6, "URY": 4, "PER": 4, "USA": 11, "ESP": 8, "ITA": 5, "DEU": 6, "FRA": 4, "GBR": 7, "CHN": 5, "KOR": 3, "SAU": 2 },
-  // Jun (5)
   { "ARG": 17, "BRA": 13, "MEX": 11, "CHL": 6, "COL": 4, "URY": 3, "PER": 3, "USA": 8, "ESP": 6, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 1 },
-  // Jul (6)
   { "ARG": 19, "BRA": 14, "MEX": 13, "CHL": 8, "COL": 5, "URY": 3, "PER": 4, "USA": 10, "ESP": 7, "ITA": 4, "DEU": 5, "FRA": 3, "GBR": 6, "CHN": 4, "KOR": 4, "SAU": 2 },
-  // Ago (7)
   { "ARG": 16, "BRA": 12, "MEX": 10, "CHL": 6, "COL": 4, "URY": 2, "PER": 3, "USA": 9, "ESP": 5, "ITA": 3, "DEU": 4, "FRA": 3, "GBR": 5, "CHN": 3, "KOR": 2, "SAU": 3 },
-  // Sep (8)
   { "ARG": 22, "BRA": 17, "MEX": 15, "CHL": 9, "COL": 7, "URY": 5, "PER": 4, "ECU": 3, "BOL": 3, "PRY": 2, "USA": 12, "ESP": 9, "ITA": 6, "DEU": 7, "FRA": 5, "GBR": 8, "CHN": 6, "KOR": 5, "SAU": 4, "VNM": 2, "TUR": 2 },
-  // Oct (9) -> 30 novedades exactas actualizadas del nuevo Excel
-  { 
-    "ARG": 8, 
-    "ESP": 2, 
-    "FRA": 2, 
-    "DEU": 2, 
-    "ITA": 2, 
-    "SAU": 3, 
-    "PER": 2, 
-    "CHN": 1, 
-    "USA": 1, 
-    "BRA": 1, 
-    "CHL": 1, 
-    "ECU": 1, 
-    "GTM": 1, 
-    "MAR": 1, 
-    "SRB": 1, 
-    "CPV": 1 
-  },
-  // Nov (10)
+  { "ARG": 8, "SAU": 4, "ESP": 1, "FRA": 1, "DEU": 1, "CHL": 1, "ECU": 1, "GTM": 1, "MAR": 1, "USA": 1, "BRA": 1, "SRB": 1 },
   {},
-  // Dic (11)
   {}
 ];
 
@@ -129,31 +100,111 @@ const nombresPaisesES = {
   "ESP": "España", "ITA": "Italia", "DEU": "Alemania", "FRA": "Francia",
   "GBR": "Reino Unido", "CHN": "China", "KOR": "Corea del Sur",
   "SAU": "Arabia Saudita", "VNM": "Vietnam", "TUR": "Turquía",
-  "GTM": "Guatemala", "MAR": "Marruecos", "SRB": "Serbia",
-  "CPV": "Cabo Verde"
+  "GTM": "Guatemala", "MAR": "Marruecos", "SRB": "Serbia"
 };
 
-// Datos mensuales base (Indicadores del area por mes 2026.xlsx)
+// Datos mensuales auditados directamente contra el libro de Excel
 const dataPorMes = [
   // Enero (0)
-  { solicIng: 117, solicSol: 116, solicSla: 107, tareasIng: 198, tareasFin: 195, tareasOntime: 190, infullGlobal: 99.1, ontimeGlobal: 92.2, infullProc: [100, 99.2, 98.5, 100, 100, 99.1], ontimeProc: [null, 93.1, 91.5, null, null, 92.2], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [12.0, 195.5, 180.0, 14.5, 35.2], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [18.2, 16.5, 12.4, 9.5, 6.2, 4.1, 3.2], areasHoras: [11.5, 14.2, 16.8, 8.4, 3.2, 2.5, 1.9] },
+  { 
+    solicIng: 117, solicSol: 116, solicSla: 108, 
+    tareasIng: 207, tareasFin: 207, tareasOntime: 196, 
+    infullGlobal: 99.1, ontimeGlobal: 92.2, 
+    infullProc: [100, 99.2, 98.5, 100, 100, 99.1], ontimeProc: [null, 93.1, 91.5, null, null, 92.2], 
+    backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, 
+    horasProc: [12.0, 195.5, 180.0, 14.5, 35.2], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [18.2, 16.5, 12.4, 9.5, 6.2, 4.1, 3.2], areasHoras: [11.5, 14.2, 16.8, 8.4, 3.2, 2.5, 1.9] 
+  },
   // Febrero (1)
-  { solicIng: 64, solicSol: 61, solicSla: 52, tareasIng: 142, tareasFin: 138, tareasOntime: 134, infullGlobal: 95.2, ontimeGlobal: 84.1, infullProc: [80.0, 96.0, 94.8, 100, 90.0, 95.2], ontimeProc: [null, 85.2, 83.5, null, null, 84.1], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [8.5, 160.0, 142.0, 10.0, 28.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [17.0, 15.2, 11.0, 8.5, 5.8, 3.9, 2.8], areasHoras: [10.2, 12.8, 14.5, 7.8, 2.9, 2.2, 1.5] },
+  { 
+    solicIng: 64, solicSol: 61, solicSla: 53, 
+    tareasIng: 150, tareasFin: 150, tareasOntime: 141, 
+    infullGlobal: 95.2, ontimeGlobal: 84.1, 
+    infullProc: [80.0, 96.0, 94.8, 100, 90.0, 95.2], ontimeProc: [null, 85.2, 83.5, null, null, 84.1], 
+    backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, 
+    horasProc: [8.5, 160.0, 142.0, 10.0, 28.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [17.0, 15.2, 11.0, 8.5, 5.8, 3.9, 2.8], areasHoras: [10.2, 12.8, 14.5, 7.8, 2.9, 2.2, 1.5] 
+  },
   // Marzo (2)
-  { solicIng: 77, solicSol: 75, solicSla: 68, tareasIng: 165, tareasFin: 160, tareasOntime: 155, infullGlobal: 97.4, ontimeGlobal: 88.2, infullProc: [100, 98.0, 96.5, 100, 95.0, 97.4], ontimeProc: [null, 89.1, 87.4, null, null, 88.2], backlogTotal: 2, backlogNoVenc: 1, backlogVenc: 1, horasProc: [10.0, 175.0, 150.0, 12.0, 31.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.5, 16.0, 10.5, 8.2, 5.5, 3.8, 2.5], areasHoras: [9.8, 13.5, 13.9, 7.2, 2.7, 2.0, 1.4] },
+  { 
+    solicIng: 77, solicSol: 75, solicSla: 68, 
+    tareasIng: 207, tareasFin: 206, tareasOntime: 197, 
+    infullGlobal: 97.4, ontimeGlobal: 88.2, 
+    infullProc: [100, 98.0, 96.5, 100, 95.0, 97.4], ontimeProc: [null, 89.1, 87.4, null, null, 88.2], 
+    backlogTotal: 2, backlogNoVenc: 1, backlogVenc: 1, 
+    horasProc: [10.0, 175.0, 150.0, 12.0, 31.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [16.5, 16.0, 10.5, 8.2, 5.5, 3.8, 2.5], areasHoras: [9.8, 13.5, 13.9, 7.2, 2.7, 2.0, 1.4] 
+  },
   // Abril (3)
-  { solicIng: 78, solicSol: 77, solicSla: 68, tareasIng: 180, tareasFin: 176, tareasOntime: 170, infullGlobal: 98.7, ontimeGlobal: 87.0, infullProc: [100, 99.0, 98.0, 100, 96.0, 98.7], ontimeProc: [null, 87.5, 86.8, null, null, 87.0], backlogTotal: 3, backlogNoVenc: 1, backlogVenc: 2, horasProc: [14.0, 185.0, 165.0, 15.0, 40.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.8, 15.5, 11.2, 8.0, 5.2, 3.5, 2.2], areasHoras: [8.5, 12.0, 15.1, 6.9, 2.5, 1.8, 1.2] },
+  { 
+    solicIng: 78, solicSol: 77, solicSla: 68, 
+    tareasIng: 240, tareasFin: 240, tareasOntime: 228, 
+    infullGlobal: 98.7, ontimeGlobal: 87.0, 
+    infullProc: [100, 99.0, 98.0, 100, 96.0, 98.7], ontimeProc: [null, 87.5, 86.8, null, null, 87.0], 
+    backlogTotal: 3, backlogNoVenc: 1, backlogVenc: 2, 
+    horasProc: [14.0, 185.0, 165.0, 15.0, 40.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [15.8, 15.5, 11.2, 8.0, 5.2, 3.5, 2.2], areasHoras: [8.5, 12.0, 15.1, 6.9, 2.5, 1.8, 1.2] 
+  },
   // Mayo (4)
-  { solicIng: 65, solicSol: 63, solicSla: 56, tareasIng: 155, tareasFin: 151, tareasOntime: 147, infullGlobal: 96.9, ontimeGlobal: 86.2, infullProc: [90.0, 97.5, 96.0, 100, 92.0, 96.9], ontimeProc: [null, 86.8, 85.5, null, null, 86.2], backlogTotal: 5, backlogNoVenc: 1, backlogVenc: 4, horasProc: [11.0, 170.0, 155.0, 13.0, 34.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.2, 14.8, 10.1, 7.8, 5.0, 3.2, 2.0], areasHoras: [7.9, 11.2, 13.8, 6.5, 2.2, 1.6, 1.1] },
+  { 
+    solicIng: 65, solicSol: 63, solicSla: 56, 
+    tareasIng: 249, tareasFin: 248, tareasOntime: 241, 
+    infullGlobal: 96.9, ontimeGlobal: 86.2, 
+    infullProc: [90.0, 97.5, 96.0, 100, 92.0, 96.9], ontimeProc: [null, 86.8, 85.5, null, null, 86.2], 
+    backlogTotal: 5, backlogNoVenc: 1, backlogVenc: 4, 
+    horasProc: [11.0, 170.0, 155.0, 13.0, 34.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [15.2, 14.8, 10.1, 7.8, 5.0, 3.2, 2.0], areasHoras: [7.9, 11.2, 13.8, 6.5, 2.2, 1.6, 1.1] 
+  },
   // Junio (5)
-  { solicIng: 85, solicSol: 65, solicSla: 63, tareasIng: 172, tareasFin: 162, tareasOntime: 158, infullGlobal: 76.5, ontimeGlobal: 74.1, infullProc: [50.0, 78.2, 75.0, 60.0, 70.0, 76.5], ontimeProc: [null, 75.0, 73.8, null, null, 74.1], backlogTotal: 22, backlogNoVenc: 15, backlogVenc: 7, horasProc: [9.0, 155.0, 140.0, 11.0, 30.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.0, 15.0, 9.8, 7.5, 4.8, 3.0, 1.9], areasHoras: [6.8, 10.5, 12.5, 5.9, 1.9, 1.4, 0.9] },
+  { 
+    solicIng: 85, solicSol: 65, solicSla: 63, 
+    tareasIng: 239, tareasFin: 239, tareasOntime: 229, 
+    infullGlobal: 76.5, ontimeGlobal: 74.1, 
+    infullProc: [50.0, 78.2, 75.0, 60.0, 70.0, 76.5], ontimeProc: [null, 75.0, 73.8, null, null, 74.1], 
+    backlogTotal: 22, backlogNoVenc: 15, backlogVenc: 7, 
+    horasProc: [9.0, 155.0, 140.0, 11.0, 30.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [16.0, 15.0, 9.8, 7.5, 4.8, 3.0, 1.9], areasHoras: [6.8, 10.5, 12.5, 5.9, 1.9, 1.4, 0.9] 
+  },
   // Julio (6)
-  { solicIng: 64, solicSol: 52, solicSla: 48, tareasIng: 150, tareasFin: 142, tareasOntime: 139, infullGlobal: 81.0, ontimeGlobal: 74.6, infullProc: [60.0, 83.0, 80.5, 70.0, 75.0, 81.0], ontimeProc: [null, 76.2, 74.0, null, null, 74.6], backlogTotal: 34, backlogNoVenc: 23, backlogVenc: 11, horasProc: [7.5, 148.0, 135.0, 9.5, 26.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [15.5, 14.5, 8.5, 7.0, 5.0, 2.8, 1.8], areasHoras: [5.5, 9.2, 11.5, 4.8, 1.5, 1.1, 0.8] },
+  { 
+    solicIng: 64, solicSol: 52, solicSla: 48, 
+    tareasIng: 221, tareasFin: 219, tareasOntime: 212, 
+    infullGlobal: 81.0, ontimeGlobal: 74.6, 
+    infullProc: [60.0, 83.0, 80.5, 70.0, 75.0, 81.0], ontimeProc: [null, 76.2, 74.0, null, null, 74.6], 
+    backlogTotal: 34, backlogNoVenc: 23, backlogVenc: 11, 
+    horasProc: [7.5, 148.0, 135.0, 9.5, 26.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [15.5, 14.5, 8.5, 7.0, 5.0, 2.8, 1.8], areasHoras: [5.5, 9.2, 11.5, 4.8, 1.5, 1.1, 0.8] 
+  },
   // Agosto (7)
-  { solicIng: 57, solicSol: 43, solicSla: 41, tareasIng: 139, tareasFin: 130, tareasOntime: 127, infullGlobal: 75.4, ontimeGlobal: 71.9, infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4], ontimeProc: [null, 73.0, 71.5, null, null, 71.9], backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, horasProc: [6.0, 135.0, 125.0, 8.0, 22.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7], areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6] },
+  { 
+    solicIng: 57, solicSol: 43, solicSla: 41, 
+    tareasIng: 198, tareasFin: 198, tareasOntime: 196, 
+    infullGlobal: 75.4, ontimeGlobal: 71.9, 
+    infullProc: [40.0, 76.5, 74.2, 50.0, 68.0, 75.4], ontimeProc: [null, 73.0, 71.5, null, null, 71.9], 
+    backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, 
+    horasProc: [6.0, 135.0, 125.0, 8.0, 22.0], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [14.8, 14.2, 7.5, 6.8, 4.5, 2.2, 1.7], areasHoras: [4.2, 8.1, 10.4, 3.5, 0.8, 0.7, 0.6] 
+  },
   // Septiembre (8)
-  { solicIng: 62, solicSol: 39, solicSla: 35, tareasIng: 147, tareasFin: 135, tareasOntime: 133, infullGlobal: 62.9, ontimeGlobal: 56.5, infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0, 123.5, 112.25, 0, 6.1], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] },
-  // Octubre (9)
+  { 
+    solicIng: 62, solicSol: 39, solicSla: 35, 
+    tareasIng: 234, tareasFin: 231, tareasOntime: 228, 
+    infullGlobal: 62.9, ontimeGlobal: 56.5, 
+    infullProc: [0, 74.3, 63.2, 0, 50.0, 62.9], ontimeProc: [0, 62.9, 63.2, 0, 50.0, 56.5], 
+    backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, 
+    horasProc: [0, 123.5, 112.25, 0, 6.1], 
+    areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
+    areasSolic: [14.52, 14.52, 6.45, 6.45, 4.84, 1.61, 1.61], areasHoras: [3.05, 6.72, 9.60, 2.20, 0.37, 0.49, 0.89] 
+  },
+  // Octubre (9) -> Cierre Auditado con Backlog Acumulado Continuo (45 vencidos / 90 total)
   { 
     solicIng: 58, 
     solicSol: 39, 
@@ -165,18 +216,18 @@ const dataPorMes = [
     ontimeGlobal: 63.8, 
     infullProc: [0, 78.9, 50.0, 0, 0, 67.2], 
     ontimeProc: [0, 76.3, 44.4, 0, 0, 63.8], 
-    backlogTotal: 90, 
-    backlogNoVenc: 45, 
-    backlogVenc: 45, 
+    backlogTotal: 90,   // 71 (Sep) + 19 (Oct)
+    backlogNoVenc: 45,  // 32 (Sep) + 13 (Oct)
+    backlogVenc: 45,    // 39 (Sep) + 6 (Oct)
     horasProc: [0, 107.7, 142.5, 31.0, 27.0], 
     areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], 
     areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], 
     areasHoras: [3.16, 7.04, 8.66, 2.19, 0.50, 0.42, 0.98] 
   },
   // Noviembre (10)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 52, backlogNoVenc: 46, backlogVenc: 6, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 90, backlogNoVenc: 45, backlogVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
   // Diciembre (11)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 52, backlogNoVenc: 46, backlogVenc: 6, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 90, backlogNoVenc: 45, backlogVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
 
 // Consolidación trimestral automática
@@ -245,7 +296,7 @@ const novedadesPorTrimestre = {
   "Q1": consolidarNovedadesTrimestre([0, 1, 2]),
   "Q2": consolidarNovedadesTrimestre([3, 4, 5]),
   "Q3": consolidarNovedadesTrimestre([6, 7, 8]),
-  "Q4": novedadesPorMes[9] // 30 novedades de Octubre
+  "Q4": novedadesPorMes[9]
 };
 
 const pluginValoresEnBarras = {
@@ -542,7 +593,7 @@ function initCharts() {
     }
   });
 
-  // 4. Flujo
+  // 4. Flujo (Semáforo)
   chartFlujos = new Chart(document.getElementById('chartFlujos'), {
     type: 'bar',
     plugins: [pluginValoresEnBarras],
@@ -579,7 +630,7 @@ function initCharts() {
     }
   });
 
-  // 5. Backlog
+  // 5. Backlog Acumulado Continuo
   chartBacklog = new Chart(document.getElementById('chartBacklog'), {
     type: 'bar',
     data: {
@@ -827,8 +878,9 @@ function actualizarDashboard() {
     ontimeSub.textContent = 'Sin registros';
   }
 
+  // Backlog Vencido y Total Acumulado Continuo
   document.getElementById('kpi-backlog').textContent = d.backlogVenc;
-  document.getElementById('kpi-backlog-sub').textContent = `Backlog Total Acumulado: ${d.backlogTotal}`;
+  document.getElementById('kpi-backlog-sub').textContent = `Total Acumulado: ${d.backlogTotal}`;
 
   // 3. Evolución Dinámica
   const serieInfullHastaCorte = historicoEvolucion.infull.map((val, idx) => (idx <= mesCorte ? val : null));
@@ -859,6 +911,7 @@ function actualizarDashboard() {
   chartFlujos.data.datasets[1].data = [d.tareasIng, d.tareasFin, d.tareasOntime];
   chartFlujos.update();
 
+  // Backlog Acumulado Continuo
   chartBacklog.data.datasets[0].data = [d.backlogTotal, d.backlogNoVenc, d.backlogVenc];
   chartBacklog.update();
 

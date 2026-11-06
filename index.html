@@ -33,7 +33,7 @@
           <div class="logo-badge">2026</div>
           <div>
             <h1>Tablero de Control e Indicadores</h1>
-            <p class="subtitle" id="subtitulo-periodo">Área de Legislación Alimentaria — Período: Septiembre 2026</p>
+            <p class="subtitle" id="subtitulo-periodo">Área de Legislación Alimentaria — Período: Octubre 2026</p>
           </div>
         </div>
 
@@ -45,7 +45,7 @@
             <button type="button" class="btn-toggle" id="btn-modo-trimestre">Por Trimestre</button>
           </div>
 
-          <!-- Selector de Mes (Visible por defecto) -->
+          <!-- Selector de Mes: Octubre seleccionado por defecto -->
           <div class="select-wrapper" id="wrapper-select-mes">
             <select id="select-mes" class="custom-dropdown">
               <option value="0">Enero</option>
@@ -63,18 +63,18 @@
             </select>
           </div>
 
-          <!-- Selector de Trimestre (Oculto inicialmente) -->
+          <!-- Selector de Trimestre -->
           <div class="select-wrapper hidden" id="wrapper-select-trimestre">
             <select id="select-trimestre" class="custom-dropdown">
               <option value="Q1">Q1 (Ene - Mar)</option>
               <option value="Q2">Q2 (Abr - Jun)</option>
-              <option value="Q3" selected>Q3 (Jul - Sep)</option>
-              <option value="Q4">Q4 (Oct - Dic)*</option>
+              <option value="Q3">Q3 (Jul - Sep)</option>
+              <option value="Q4" selected>Q4 (Oct - Dic)</option>
             </select>
           </div>
 
           <div class="badge-status">
-            <span class="status-dot"></span> <span id="label-status">Datos de Septiembre</span>
+            <span class="status-dot"></span> <span id="label-status">Datos de Octubre</span>
           </div>
         </div>
       </div>
@@ -116,9 +116,9 @@
         </div>
 
         <div class="kpi-card danger" id="card-backlog">
-          <span class="kpi-label">Backlog Vencido Acumulado</span>
+          <span class="kpi-label">Backlog Vencido</span>
           <div class="kpi-val" id="kpi-backlog">45</div>
-          <span class="kpi-sub" id="kpi-backlog-sub">Backlog Total Acumulado: 90</span>
+          <span class="kpi-sub" id="kpi-backlog-sub">Total Acumulado: 90</span>
         </div>
       </section>
 
@@ -129,7 +129,7 @@
         <div class="chart-card col-span-3">
           <div class="card-header">
             <h3>Solicitudes - Evolución Mensual Real vs Meta</h3>
-            <span class="tag" id="tag-evolucion">Ene - Sep 2026</span>
+            <span class="tag" id="tag-evolucion">Ene - Oct 2026</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartEvolucionMetas"></canvas>
@@ -140,7 +140,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-infull-proc">Solicitudes - INFULL Real vs Meta</h3>
-            <span class="tag" id="tag-infull">Septiembre</span>
+            <span class="tag" id="tag-infull">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartInfullProceso"></canvas>
@@ -151,7 +151,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-ontime-proc">Solicitudes - ONTIME Real vs Meta</h3>
-            <span class="tag" id="tag-ontime">Septiembre</span>
+            <span class="tag" id="tag-ontime">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartOntimeProceso"></canvas>
@@ -162,18 +162,18 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-flujo">Flujo: Solicitudes vs Tareas</h3>
-            <span class="tag" id="tag-flujo">Septiembre</span>
+            <span class="tag" id="tag-flujo">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartFlujos"></canvas>
           </div>
         </div>
 
-        <!-- 5. Backlog -->
+        <!-- 5. Backlog Acumulado -->
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-backlog">Solicitudes - Backlog Vencido</h3>
-            <span class="tag" id="tag-backlog">Septiembre</span>
+            <span class="tag" id="tag-backlog">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartBacklog"></canvas>
@@ -184,7 +184,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-horas-proc">Tiempo Dedicado por Proceso (Horas)</h3>
-            <span class="tag" id="tag-horas">Septiembre</span>
+            <span class="tag" id="tag-horas">Octubre</span>
           </div>
           <div class="chart-wrapper pie-wrapper">
             <canvas id="chartHorasProceso"></canvas>
@@ -195,7 +195,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3>% Horas Registradas</h3>
-            <span class="tag" id="tag-horas-reg">Ene - Sep 2026</span>
+            <span class="tag" id="tag-horas-reg">Ene - Oct 2026</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartHorasRegistradas"></canvas>
@@ -206,7 +206,7 @@
         <div class="chart-card col-span-2">
           <div class="card-header">
             <h3 id="title-areas">Áreas Clientes: % Solicitudes vs % Horas Dedicadas</h3>
-            <span class="tag" id="tag-areas">Septiembre</span>
+            <span class="tag" id="tag-areas">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartAreasClientes"></canvas>
@@ -217,7 +217,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-tiempo-mes">Promedio del Período</h3>
-            <span class="tag" id="tag-tiempo-mes">Septiembre</span>
+            <span class="tag" id="tag-tiempo-mes">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartTiempoRespuestaMes"></canvas>
@@ -233,7 +233,7 @@
         <div class="chart-card card-evol-rta">
           <div class="card-header">
             <h3>Tiempo Promedio (Días) - Evolución</h3>
-            <span class="tag" id="tag-tiempo-resp">Ene - Sep 2026</span>
+            <span class="tag" id="tag-tiempo-resp">Ene - Oct 2026</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartTiempoRespuestaEvol"></canvas>
@@ -244,7 +244,7 @@
         <div class="chart-card card-treemap">
           <div class="card-header">
             <h3 id="title-treemap-solic">Solicitudes por Área</h3>
-            <span class="tag" id="tag-treemap-solic">Septiembre</span>
+            <span class="tag" id="tag-treemap-solic">Octubre</span>
           </div>
           <div class="treemap-container" id="treemap-solic-container"></div>
         </div>
@@ -253,7 +253,7 @@
         <div class="chart-card card-treemap">
           <div class="card-header">
             <h3 id="title-treemap-tareas">Tipo de Tareas</h3>
-            <span class="tag" id="tag-treemap-tareas">Septiembre</span>
+            <span class="tag" id="tag-treemap-tareas">Octubre</span>
           </div>
           <div class="treemap-container" id="treemap-tareas-container"></div>
         </div>
@@ -270,7 +270,7 @@
             </div>
             <div class="map-header-right">
               <span class="badge-total-nov" id="badge-total-novedades">Total Novedades: 0</span>
-              <span class="tag" id="tag-mapa">Septiembre</span>
+              <span class="tag" id="tag-mapa">Octubre</span>
             </div>
           </div>
           

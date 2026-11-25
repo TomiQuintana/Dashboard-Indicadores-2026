@@ -565,3 +565,14 @@ body {
   font-size: 0.78rem;
   color: #e2e8f0;
 }
+
+.full-width-section {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.treemap-full {
+  height: auto;
+  min-height: 340px;
+  max-height: 460px;
+}

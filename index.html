@@ -202,14 +202,25 @@
           </div>
         </div>
 
-        <!-- 8. Áreas Clientes -->
-        <div class="chart-card col-span-2">
+        <!-- 8. Áreas Clientes (Mensual - achicado a 1 columna) -->
+        <div class="chart-card col-span-1">
           <div class="card-header">
-            <h3 id="title-areas">Áreas Clientes: % Solicitudes vs % Horas Dedicadas</h3>
-            <span class="tag" id="tag-areas">Septiembre</span>
+            <h3 id="title-areas">Áreas Clientes: % Solic. vs % Hs</h3>
+            <span class="tag" id="tag-areas">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartAreasClientes"></canvas>
+          </div>
+        </div>
+
+        <!-- 8B. NUEVO: Áreas Clientes Acumulado Ene - Oct -->
+        <div class="chart-card col-span-1">
+          <div class="card-header">
+            <h3>Áreas Clientes: Acumulado Ene - Oct</h3>
+            <span class="tag">Ene - Oct 2026</span>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartAreasClientesAcum"></canvas>
           </div>
         </div>
 
@@ -217,7 +228,7 @@
         <div class="chart-card col-span-1">
           <div class="card-header">
             <h3 id="title-tiempo-mes">Promedio del Período</h3>
-            <span class="tag" id="tag-tiempo-mes">Septiembre</span>
+            <span class="tag" id="tag-tiempo-mes">Octubre</span>
           </div>
           <div class="chart-wrapper">
             <canvas id="chartTiempoRespuestaMes"></canvas>
@@ -259,7 +270,16 @@
         </div>
 
       </section>
-
+      <!-- NUEVA SECCIÓN: SOLICITUDES ACUMULADAS POR ÁREA (TODAS LAS ÁREAS ENE - OCT) -->
+      <section class="full-width-section">
+        <div class="chart-card">
+          <div class="card-header">
+            <h3>Solicitudes por Área — Acumulado Todas las Áreas (727 Total)</h3>
+            <span class="tag">Ene - Oct 2026</span>
+          </div>
+          <div class="treemap-container treemap-full" id="treemap-todas-areas-acum"></div>
+        </div>
+      </section>
       <!-- 13. SECCIÓN: MAPA MUNDIAL DE NOVEDADES REGULATORIAS -->
       <section class="map-section">
         <div class="chart-card map-card">

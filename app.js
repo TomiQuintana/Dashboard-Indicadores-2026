@@ -77,6 +77,54 @@ const treemapTareasData = [
   { label: 'Capacitación', valor: 3, color: '#21618c' }
 ];
 
+// Datos Acumulados Ene - Oct 2026 (7 Áreas I+D)
+const areasClientesAcumData = {
+  labels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'],
+  solic: [9.22, 10.18, 18.02, 6.33, 0.96, 1.65, 2.48],
+  horas: [3.14, 6.99, 8.60, 2.18, 0.50, 0.42, 0.97]
+};
+
+// Solicitudes Acumuladas Ene - Oct 2026 (Todas las 38 áreas activas — Total: 727)
+const treemapTodasAreasAcum = [
+  { label: 'ALA', valor: 239, color: '#1f618d' },
+  { label: 'I+D Brasil', valor: 131, color: '#1b5e20' },
+  { label: 'I+D Alimentos', valor: 74, color: '#2e7d32' },
+  { label: 'I+D Bagley', valor: 67, color: '#0288d1' },
+  { label: 'I+D Confectionary', valor: 46, color: '#7b1fa2' },
+  { label: 'I+D Ingrecor', valor: 18, color: '#a04000' },
+  { label: 'MKT Confectionary', valor: 14, color: '#1e4620' },
+  { label: 'I+D Chile', valor: 12, color: '#102a43' },
+  { label: 'Calidad Alimentos', valor: 11, color: '#006064' },
+  { label: 'Comex', valor: 11, color: '#1a365d' },
+  { label: 'Sin valor', valor: 11, color: '#6a1b9a' },
+  { label: 'Logistica Comex', valor: 10, color: '#00838f' },
+  { label: 'ALA Interno', valor: 9, color: '#d84315' },
+  { label: 'I+D México', valor: 8, color: '#0d381e' },
+  { label: 'Calidad Confectionary', valor: 6, color: '#4a148c' },
+  { label: 'Op Comex', valor: 5, color: '#0277bd' },
+  { label: 'Packaging', valor: 5, color: '#283593' },
+  { label: 'MKT Bagley', valor: 5, color: '#e65100' },
+  { label: 'RT Bolivia', valor: 5, color: '#388e3c' },
+  { label: 'I+D Perú', valor: 4, color: '#00695c' },
+  { label: 'RT Uruguay', valor: 4, color: '#1565c0' },
+  { label: 'MKT Alimentos', valor: 4, color: '#558b2f' },
+  { label: 'Innovación', valor: 3, color: '#6d4c41' },
+  { label: 'Calidad Logistica', valor: 3, color: '#37474f' },
+  { label: 'Com, Inst, y Serv,MKT', valor: 3, color: '#ad1457' },
+  { label: 'ARDION', valor: 2, color: '#455a64' },
+  { label: 'Legales Corporativo', valor: 2, color: '#5d4037' },
+  { label: 'OTRAS ÁREAS MKT', valor: 2, color: '#c2185b' },
+  { label: 'MKT Comex', valor: 2, color: '#00796b' },
+  { label: 'I+D Cartocor', valor: 2, color: '#ef6c00' },
+  { label: 'Calidad Bagley', valor: 2, color: '#bf360c' },
+  { label: 'Compras', valor: 1, color: '#546e7a' },
+  { label: 'I+D Corporativo', valor: 1, color: '#3949ab' },
+  { label: 'I+D Angola', valor: 1, color: '#00897b' },
+  { label: 'I+D Funcionales', valor: 1, color: '#0097a7' },
+  { label: 'Calidad Ingrecor', valor: 1, color: '#795548' },
+  { label: 'Jefe de Operaciones', valor: 1, color: '#4527a0' },
+  { label: 'Calidad Packaging', valor: 1, color: '#2e7d32' }
+];
 // Novedades Regulatorias por Mes (DF-VigReg2026 - Vigilancia Regulatoria.xlsm)
 const novedadesPorMes = [
   // Ene (0)
@@ -253,7 +301,7 @@ const pluginValoresEnBarras = {
   }
 };
 
-let chartMetas, chartInfull, chartOntime, chartFlujos, chartBacklog, chartHoras, chartAreas, chartHorasReg, chartTiempoRta, chartTiempoMes;
+let chartMetas, chartInfull, chartOntime, chartFlujos, chartBacklog, chartHoras, chartAreas, chartAreasAcum,chartHorasReg, chartTiempoRta, chartTiempoMes;
 let modoFiltro = 'mes'; 
 let currentSelectedMonth = 9; // Octubre por defecto
 let currentSelectedQuarter = 'Q4'; 
@@ -622,6 +670,39 @@ function initCharts() {
     }
   });
 
+ // 7B. Áreas Clientes Acumulado Ene - Oct
+  chartAreasAcum = new Chart(document.getElementById('chartAreasClientesAcum'), {
+    type: 'bar',
+    data: {
+      labels: areasClientesAcumData.labels,
+      datasets: [
+        { 
+          label: '% Solicitudes Recibidas', 
+          data: areasClientesAcumData.solic, 
+          backgroundColor: '#6366f1', // Índigo
+          borderColor: '#4f46e5', 
+          borderWidth: 1, 
+          borderRadius: 4 
+        },
+        { 
+          label: '% Horas Dedicadas', 
+          data: areasClientesAcumData.horas, 
+          backgroundColor: '#10b981', // Esmeralda
+          borderColor: '#059669', 
+          borderWidth: 1, 
+          borderRadius: 4 
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        x: { grid: { display: false }, ticks: { maxRotation: 35, minRotation: 25, font: { size: 10 } } }
+      }
+    }
+  });
   // 8. % Horas Registradas
   chartHorasReg = new Chart(document.getElementById('chartHorasRegistradas'), {
     type: 'line',
@@ -897,6 +978,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnModoTrimestre.classList.remove('active');
     wrapperMes.classList.remove('hidden');
     wrapperTrimestre.classList.add('hidden');
+    renderTreemap('treemap-todas-areas-acum', treemapTodasAreasAcum, 1);
     actualizarDashboard();
   });
 

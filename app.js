@@ -709,19 +709,20 @@ function initCharts() {
     }
   });
 
-  // 8. % Horas Registradas
+  // 8. % Horas Registradas (Acumulado)
   chartHorasReg = new Chart(document.getElementById('chartHorasRegistradas'), {
     type: 'line',
     data: {
       labels: nombresMesesAbrev,
       datasets: [{
-        label: '% Horas Registradas',
+        label: '% Horas Registradas (Acumulado)',
         data: [],
         borderColor: '#16a34a',
-        backgroundColor: 'rgba(22, 163, 74, 0.08)',
+        backgroundColor: 'rgba(22, 163, 74, 0.12)',
+        borderWidth: 2.5,
         fill: true,
-        tension: 0.3,
-        pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 8 : 4),
+        tension: 0.25,
+        pointRadius: ctx => (ctx.dataIndex === currentSelectedMonth && ctx.raw !== null ? 7 : 4),
         pointBackgroundColor: ctx => (ctx.dataIndex === currentSelectedMonth ? '#fff' : '#16a34a')
       }]
     },
@@ -729,7 +730,7 @@ function initCharts() {
       responsive: true,
       maintainAspectRatio: false,
       scales: { 
-        y: { min: 40, max: 130, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
+        y: { beginAtZero: true, ticks: { callback: v => v + '%' }, grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false } }
       }
     }
@@ -898,10 +899,19 @@ function actualizarDashboard() {
   document.getElementById('kpi-snc').textContent = d.sncVenc;
   document.getElementById('kpi-snc-sub').textContent = `SNC Total Acumulado: ${d.sncTotal}`;
 
-  // 3. Evolución Dinámica
+ // 3. Evolución Dinámica
   const serieInfullHastaCorte = historicoEvolucion.infull.map((val, idx) => (idx <= mesCorte ? val : null));
   const serieOntimeHastaCorte = historicoEvolucion.ontime.map((val, idx) => (idx <= mesCorte ? val : null));
-  const serieHorasRegHastaCorte = historicoEvolucion.horasReg.map((val, idx) => (idx <= mesCorte ? val : null));
+
+  let acumuladoHorasReg = 0;
+  const serieHorasRegHastaCorte = historicoEvolucion.horasReg.map((val, idx) => {
+    if (idx <= mesCorte && val !== null && val !== undefined) {
+      acumuladoHorasReg += val;
+      return Number(acumuladoHorasReg.toFixed(1));
+    }
+    return null;
+  });
+
   const serieAsesHastaCorte = historicoEvolucion.tiempoAses.map((val, idx) => (idx <= mesCorte ? val : null));
   const serieDifHastaCorte = historicoEvolucion.tiempoDif.map((val, idx) => (idx <= mesCorte ? val : null));
 

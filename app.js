@@ -3,6 +3,7 @@
  * Archivo: app.js
  * 
  * - Actualizado con los datos de Octubre 2026 (30 novedades en Vigilancia Regulatoria).
+ * - Indicador actualizado a SNC (Servicio No Conforme).
  * - Soporte para Filtro por Mes (Ene - Dic) y Filtro por Trimestre (Q1 - Q4).
  * - Gráficos combinados (Real en Barras + Metas en Línea).
  * - Treemaps dinámicos y Mapa Mundial Coroplético de Vigilancia Regulatoria.
@@ -125,6 +126,7 @@ const treemapTodasAreasAcum = [
   { label: 'Jefe de Operaciones', valor: 1, color: '#4527a0' },
   { label: 'Calidad Packaging', valor: 1, color: '#2e7d32' }
 ];
+
 // Novedades Regulatorias por Mes (DF-VigReg2026 - Vigilancia Regulatoria.xlsm)
 const novedadesPorMes = [
   // Ene (0)
@@ -184,36 +186,37 @@ const nombresPaisesES = {
 // Datos mensuales base (Indicadores del area por mes 2026.xlsx)
 const dataPorMes = [
   // Enero (0)
-  { solicIng: 116, solicSol: 116, solicSla: 108, tareasIng: 207, tareasFin: 207, tareasOntime: 196, infullGlobal: 100.0, ontimeGlobal: 93.1, infullProc: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0], ontimeProc: [83.3, 95.1, 90.2, 100.0, 100.0, 93.1], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [43.75, 645.2, 580.25, 509.75, 74.25], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.24, 7.69, 17.09, 10.26, 0.85, 1.71, 2.56], areasHoras: [3.66, 3.45, 2.73, 2.07, 0.11, 0.86, 1.08] },
+  { solicIng: 116, solicSol: 116, solicSla: 108, tareasIng: 207, tareasFin: 207, tareasOntime: 196, infullGlobal: 100.0, ontimeGlobal: 93.1, infullProc: [100.0, 100.0, 100.0, 100.0, 100.0, 100.0], ontimeProc: [83.3, 95.1, 90.2, 100.0, 100.0, 93.1], sncTotal: 1, sncNoVenc: 1, sncVenc: 0, horasProc: [43.75, 645.2, 580.25, 509.75, 74.25], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.24, 7.69, 17.09, 10.26, 0.85, 1.71, 2.56], areasHoras: [3.66, 3.45, 2.73, 2.07, 0.11, 0.86, 1.08] },
   // Febrero (1)
-  { solicIng: 63, solicSol: 60, solicSla: 53, tareasIng: 150, tareasFin: 150, tareasOntime: 141, infullGlobal: 95.2, ontimeGlobal: 84.1, infullProc: [100.0, 92.9, 97.0, 0, 0, 95.2], ontimeProc: [100.0, 85.7, 81.8, 0, 0, 84.1], backlogTotal: 1, backlogNoVenc: 1, backlogVenc: 0, horasProc: [94.0, 100.25, 243.5, 0.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [3.12, 14.06, 26.56, 1.56, 0.0, 3.12, 3.12], areasHoras: [0.57, 15.08, 16.11, 1.48, 0.0, 0.34, 0.91] },
+  { solicIng: 63, solicSol: 60, solicSla: 53, tareasIng: 150, tareasFin: 150, tareasOntime: 141, infullGlobal: 95.2, ontimeGlobal: 84.1, infullProc: [100.0, 92.9, 97.0, 0, 0, 95.2], ontimeProc: [100.0, 85.7, 81.8, 0, 0, 84.1], sncTotal: 1, sncNoVenc: 1, sncVenc: 0, horasProc: [94.0, 100.25, 243.5, 0.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [3.12, 14.06, 26.56, 1.56, 0.0, 3.12, 3.12], areasHoras: [0.57, 15.08, 16.11, 1.48, 0.0, 0.34, 0.91] },
   // Marzo (2)
-  { solicIng: 76, solicSol: 75, solicSla: 68, tareasIng: 207, tareasFin: 206, tareasOntime: 197, infullGlobal: 98.7, ontimeGlobal: 89.5, infullProc: [0, 97.6, 100.0, 100.0, 0, 98.7], ontimeProc: [0, 85.4, 94.1, 100.0, 0, 89.5], backlogTotal: 2, backlogNoVenc: 1, backlogVenc: 1, horasProc: [0.0, 188.25, 295.75, 6.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [3.9, 9.09, 29.87, 6.49, 0.0, 0.0, 3.9], areasHoras: [4.29, 7.04, 31.07, 2.4, 0.0, 0.0, 0.77] },
+  { solicIng: 76, solicSol: 75, solicSla: 68, tareasIng: 207, tareasFin: 206, tareasOntime: 197, infullGlobal: 98.7, ontimeGlobal: 89.5, infullProc: [0, 97.6, 100.0, 100.0, 0, 98.7], ontimeProc: [0, 85.4, 94.1, 100.0, 0, 89.5], sncTotal: 2, sncNoVenc: 1, sncVenc: 1, horasProc: [0.0, 188.25, 295.75, 6.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [3.9, 9.09, 29.87, 6.49, 0.0, 0.0, 3.9], areasHoras: [4.29, 7.04, 31.07, 2.4, 0.0, 0.0, 0.77] },
   // Abril (3)
-  { solicIng: 77, solicSol: 76, solicSla: 67, tareasIng: 240, tareasFin: 240, tareasOntime: 228, infullGlobal: 98.7, ontimeGlobal: 87.0, infullProc: [100.0, 100.0, 96.6, 0, 0, 98.7], ontimeProc: [100.0, 86.7, 86.2, 0, 0, 87.0], backlogTotal: 3, backlogNoVenc: 1, backlogVenc: 2, horasProc: [30.0, 137.85, 219.0, 0.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [8.97, 5.13, 32.05, 5.13, 2.56, 2.56, 0.0], areasHoras: [8.53, 8.01, 22.23, 2.58, 0.65, 0.32, 0.0] },
+  { solicIng: 77, solicSol: 76, solicSla: 67, tareasIng: 240, tareasFin: 240, tareasOntime: 228, infullGlobal: 98.7, ontimeGlobal: 87.0, infullProc: [100.0, 100.0, 96.6, 0, 0, 98.7], ontimeProc: [100.0, 86.7, 86.2, 0, 0, 87.0], sncTotal: 3, sncNoVenc: 1, sncVenc: 2, horasProc: [30.0, 137.85, 219.0, 0.0, 0.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [8.97, 5.13, 32.05, 5.13, 2.56, 2.56, 0.0], areasHoras: [8.53, 8.01, 22.23, 2.58, 0.65, 0.32, 0.0] },
   // Mayo (4)
-  { solicIng: 65, solicSol: 65, solicSla: 57, tareasIng: 249, tareasFin: 248, tareasOntime: 241, infullGlobal: 100.0, ontimeGlobal: 87.7, infullProc: [100.0, 100.0, 100.0, 0, 100.0, 100.0], ontimeProc: [33.3, 94.6, 87.0, 0, 50.0, 87.7], backlogTotal: 5, backlogNoVenc: 1, backlogVenc: 4, horasProc: [9.0, 167.25, 204.25, 0.0, 54.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [12.31, 7.69, 21.54, 4.62, 0.0, 0.0, 1.54], areasHoras: [5.18, 4.83, 14.79, 7.54, 0.0, 0.0, 0.92] },
+  { solicIng: 65, solicSol: 65, solicSla: 57, tareasIng: 249, tareasFin: 248, tareasOntime: 241, infullGlobal: 100.0, ontimeGlobal: 87.7, infullProc: [100.0, 100.0, 100.0, 0, 100.0, 100.0], ontimeProc: [33.3, 94.6, 87.0, 0, 50.0, 87.7], sncTotal: 5, sncNoVenc: 1, sncVenc: 4, horasProc: [9.0, 167.25, 204.25, 0.0, 54.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [12.31, 7.69, 21.54, 4.62, 0.0, 0.0, 1.54], areasHoras: [5.18, 4.83, 14.79, 7.54, 0.0, 0.0, 0.92] },
   // Junio (5)
-  { solicIng: 85, solicSol: 67, solicSla: 64, tareasIng: 239, tareasFin: 239, tareasOntime: 229, infullGlobal: 78.8, ontimeGlobal: 75.3, infullProc: [50.0, 89.7, 93.8, 0.0, 0.0, 78.8], ontimeProc: [25.0, 89.7, 87.5, 0.0, 0.0, 75.3], backlogTotal: 22, backlogNoVenc: 15, backlogVenc: 7, horasProc: [129.0, 478.25, 395.0, 115.0, 27.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [4.71, 3.53, 11.76, 7.06, 0.0, 2.35, 2.35], areasHoras: [0.7, 0.79, 6.23, 1.27, 0.0, 0.35, 0.26] },
+  { solicIng: 85, solicSol: 67, solicSla: 64, tareasIng: 239, tareasFin: 239, tareasOntime: 229, infullGlobal: 78.8, ontimeGlobal: 75.3, infullProc: [50.0, 89.7, 93.8, 0.0, 0.0, 78.8], ontimeProc: [25.0, 89.7, 87.5, 0.0, 0.0, 75.3], sncTotal: 22, sncNoVenc: 15, sncVenc: 7, horasProc: [129.0, 478.25, 395.0, 115.0, 27.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [4.71, 3.53, 11.76, 7.06, 0.0, 2.35, 2.35], areasHoras: [0.7, 0.79, 6.23, 1.27, 0.0, 0.35, 0.26] },
   // Julio (6)
-  { solicIng: 63, solicSol: 55, solicSla: 50, tareasIng: 221, tareasFin: 219, tareasOntime: 212, infullGlobal: 87.3, ontimeGlobal: 79.4, infullProc: [0, 96.4, 89.7, 33.3, 33.3, 87.3], ontimeProc: [0, 82.1, 86.2, 33.3, 33.3, 79.4], backlogTotal: 34, backlogNoVenc: 23, backlogVenc: 11, horasProc: [0.0, 95.25, 277.5, 121.5, 17.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [4.69, 10.94, 14.06, 9.38, 1.56, 1.56, 3.12], areasHoras: [1.03, 10.76, 5.33, 1.76, 4.01, 0.2, 1.86] },
+  { solicIng: 63, solicSol: 55, solicSla: 50, tareasIng: 221, tareasFin: 219, tareasOntime: 212, infullGlobal: 87.3, ontimeGlobal: 79.4, infullProc: [0, 96.4, 89.7, 33.3, 33.3, 87.3], ontimeProc: [0, 82.1, 86.2, 33.3, 33.3, 79.4], sncTotal: 34, sncNoVenc: 23, sncVenc: 11, horasProc: [0.0, 95.25, 277.5, 121.5, 17.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [4.69, 10.94, 14.06, 9.38, 1.56, 1.56, 3.12], areasHoras: [1.03, 10.76, 5.33, 1.76, 4.01, 0.2, 1.86] },
   // Agosto (7)
-  { solicIng: 57, solicSol: 51, solicSla: 47, tareasIng: 198, tareasFin: 198, tareasOntime: 196, infullGlobal: 89.5, ontimeGlobal: 82.5, infullProc: [100.0, 96.2, 85.7, 0, 50.0, 89.5], ontimeProc: [100.0, 84.6, 82.1, 0, 50.0, 82.5], backlogTotal: 48, backlogNoVenc: 27, backlogVenc: 21, horasProc: [1.0, 350.45, 309.75, 0.0, 35.5], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [5.26, 24.56, 10.53, 8.77, 0.0, 3.51, 1.75], areasHoras: [1.79, 9.87, 1.54, 1.0, 0.0, 0.29, 0.43] },
+  { solicIng: 57, solicSol: 51, solicSla: 47, tareasIng: 198, tareasFin: 198, tareasOntime: 196, infullGlobal: 89.5, ontimeGlobal: 82.5, infullProc: [100.0, 96.2, 85.7, 0, 50.0, 89.5], ontimeProc: [100.0, 84.6, 82.1, 0, 50.0, 82.5], sncTotal: 48, sncNoVenc: 27, sncVenc: 21, horasProc: [1.0, 350.45, 309.75, 0.0, 35.5], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [5.26, 24.56, 10.53, 8.77, 0.0, 3.51, 1.75], areasHoras: [1.79, 9.87, 1.54, 1.0, 0.0, 0.29, 0.43] },
   // Septiembre (8)
-  { solicIng: 62, solicSol: 58, solicSla: 52, tareasIng: 234, tareasFin: 231, tareasOntime: 228, infullGlobal: 93.5, ontimeGlobal: 83.9, infullProc: [0.0, 94.7, 100.0, 0, 50.0, 93.5], ontimeProc: [0.0, 84.2, 90.5, 0, 50.0, 83.9], backlogTotal: 71, backlogNoVenc: 32, backlogVenc: 39, horasProc: [0.0, 161.25, 150.25, 0.0, 12.6], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.13, 14.52, 6.45, 6.45, 4.84, 1.61, 3.23], areasHoras: [5.09, 18.67, 8.64, 4.17, 2.47, 0.62, 2.47] },
+  { solicIng: 62, solicSol: 58, solicSla: 52, tareasIng: 234, tareasFin: 231, tareasOntime: 228, infullGlobal: 93.5, ontimeGlobal: 83.9, infullProc: [0.0, 94.7, 100.0, 0, 50.0, 93.5], ontimeProc: [0.0, 84.2, 90.5, 0, 50.0, 83.9], sncTotal: 71, sncNoVenc: 32, sncVenc: 39, horasProc: [0.0, 161.25, 150.25, 0.0, 12.6], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [16.13, 14.52, 6.45, 6.45, 4.84, 1.61, 3.23], areasHoras: [5.09, 18.67, 8.64, 4.17, 2.47, 0.62, 2.47] },
   // Octubre (9)
-  { solicIng: 58, solicSol: 39, solicSla: 37, tareasIng: 153, tareasFin: 151, tareasOntime: 149, infullGlobal: 67.2, ontimeGlobal: 63.8, infullProc: [0, 78.9, 50.0, 0.0, 0.0, 67.2], ontimeProc: [0, 76.3, 44.4, 0.0, 0.0, 63.8], backlogTotal: 90, backlogNoVenc: 45, backlogVenc: 45, horasProc: [0.0, 107.7, 142.5, 31.0, 27.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], areasHoras: [5.68, 16.39, 1.78, 0.0, 0.0, 0.0, 2.76] },
+  { solicIng: 58, solicSol: 39, solicSla: 37, tareasIng: 153, tareasFin: 151, tareasOntime: 149, infullGlobal: 67.2, ontimeGlobal: 63.8, infullProc: [0, 78.9, 50.0, 0.0, 0.0, 67.2], ontimeProc: [0, 76.3, 44.4, 0.0, 0.0, 63.8], sncTotal: 90, sncNoVenc: 45, sncVenc: 45, horasProc: [0.0, 107.7, 142.5, 31.0, 27.0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [13.79, 12.07, 5.17, 0.0, 0.0, 0.0, 3.45], areasHoras: [5.68, 16.39, 1.78, 0.0, 0.0, 0.0, 2.76] },
   // Noviembre (10)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 90, backlogNoVenc: 45, backlogVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], sncTotal: 90, sncNoVenc: 45, sncVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] },
   // Diciembre (11)
-  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], backlogTotal: 90, backlogNoVenc: 45, backlogVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
+  { solicIng: 0, solicSol: 0, solicSla: 0, tareasIng: 0, tareasFin: 0, tareasOntime: 0, infullGlobal: 0, ontimeGlobal: 0, infullProc: [0,0,0,0,0,0], ontimeProc: [0,0,0,0,0,0], sncTotal: 90, sncNoVenc: 45, sncVenc: 45, horasProc: [0,0,0,0,0], areasLabels: ['I+D Bagley', 'I+D Alimentos', 'I+D Brasil', 'I+D Confectionary', 'I+D México', 'I+D Chile', 'I+D Ingrecor'], areasSolic: [0,0,0,0,0,0,0], areasHoras: [0,0,0,0,0,0,0] }
 ];
+
 // Consolidación trimestral automática
 function calcularDatosTrimestre(mesesIndices) {
   let solicIng = 0, solicSol = 0, solicSla = 0;
   let tareasIng = 0, tareasFin = 0, tareasOntime = 0;
   let horasProc = [0, 0, 0, 0, 0];
-  let backlogTotal = 0, backlogNoVenc = 0, backlogVenc = 0;
+  let sncTotal = 0, sncNoVenc = 0, sncVenc = 0;
 
   mesesIndices.forEach(idx => {
     const m = dataPorMes[idx];
@@ -229,9 +232,9 @@ function calcularDatosTrimestre(mesesIndices) {
   });
 
   const ultimoMesConDatos = [...mesesIndices].reverse().find(idx => dataPorMes[idx].solicIng > 0) ?? mesesIndices[0];
-  backlogTotal = dataPorMes[ultimoMesConDatos].backlogTotal;
-  backlogNoVenc = dataPorMes[ultimoMesConDatos].backlogNoVenc;
-  backlogVenc = dataPorMes[ultimoMesConDatos].backlogVenc;
+  sncTotal = dataPorMes[ultimoMesConDatos].sncTotal;
+  sncNoVenc = dataPorMes[ultimoMesConDatos].sncNoVenc;
+  sncVenc = dataPorMes[ultimoMesConDatos].sncVenc;
 
   const infullGlobal = solicIng > 0 ? Number(((solicSol / solicIng) * 100).toFixed(1)) : 0;
   const ontimeGlobal = solicIng > 0 ? Number(((solicSla / solicIng) * 100).toFixed(1)) : 0;
@@ -244,7 +247,7 @@ function calcularDatosTrimestre(mesesIndices) {
     tareasIng, tareasFin, tareasOntime,
     infullGlobal, ontimeGlobal,
     infullProc, ontimeProc,
-    backlogTotal, backlogNoVenc, backlogVenc,
+    sncTotal, sncNoVenc, sncVenc,
     horasProc,
     areasLabels: dataPorMes[ultimoMesConDatos].areasLabels,
     areasSolic: dataPorMes[ultimoMesConDatos].areasSolic,
@@ -301,7 +304,7 @@ const pluginValoresEnBarras = {
   }
 };
 
-let chartMetas, chartInfull, chartOntime, chartFlujos, chartBacklog, chartHoras, chartAreas, chartAreasAcum,chartHorasReg, chartTiempoRta, chartTiempoMes;
+let chartMetas, chartInfull, chartOntime, chartFlujos, chartSNC, chartHoras, chartAreas, chartAreasAcum, chartHorasReg, chartTiempoRta, chartTiempoMes;
 let modoFiltro = 'mes'; 
 let currentSelectedMonth = 9; // Octubre por defecto
 let currentSelectedQuarter = 'Q4'; 
@@ -608,11 +611,12 @@ function initCharts() {
     }
   });
 
-  // 5. Backlog
-  chartBacklog = new Chart(document.getElementById('chartBacklog'), {
+  // 5. SNC (Servicio No Conforme)
+  chartSNC = new Chart(document.getElementById('chartSNC'), {
     type: 'bar',
+    plugins: [pluginValoresEnBarras],
     data: {
-      labels: ['Backlog Total', 'No Vencido', 'Vencido (SLA)'],
+      labels: ['SNC Total', 'No Vencido', 'Vencido (SLA)'],
       datasets: [{
         label: 'Cantidad Acumulada',
         data: [],
@@ -623,6 +627,7 @@ function initCharts() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: { padding: { top: 22, bottom: 5, left: 5, right: 5 } },
       scales: {
         y: { grid: { color: 'rgba(0, 0, 0, 0.05)' } },
         x: { grid: { display: false } }
@@ -670,7 +675,7 @@ function initCharts() {
     }
   });
 
- // 7B. Áreas Clientes Acumulado Ene - Oct
+  // 7B. Áreas Clientes Acumulado Ene - Oct
   chartAreasAcum = new Chart(document.getElementById('chartAreasClientesAcum'), {
     type: 'bar',
     data: {
@@ -679,7 +684,7 @@ function initCharts() {
         { 
           label: '% Solicitudes Recibidas', 
           data: areasClientesAcumData.solic, 
-          backgroundColor: '#6366f1', // Índigo
+          backgroundColor: '#6366f1',
           borderColor: '#4f46e5', 
           borderWidth: 1, 
           borderRadius: 4 
@@ -687,7 +692,7 @@ function initCharts() {
         { 
           label: '% Horas Dedicadas', 
           data: areasClientesAcumData.horas, 
-          backgroundColor: '#10b981', // Esmeralda
+          backgroundColor: '#10b981',
           borderColor: '#059669', 
           borderWidth: 1, 
           borderRadius: 4 
@@ -703,6 +708,7 @@ function initCharts() {
       }
     }
   });
+
   // 8. % Horas Registradas
   chartHorasReg = new Chart(document.getElementById('chartHorasRegistradas'), {
     type: 'line',
@@ -827,7 +833,7 @@ function actualizarDashboard() {
     if (el) el.textContent = rangoTexto;
   });
 
-  ['tag-infull', 'tag-ontime', 'tag-flujo', 'tag-backlog', 'tag-horas', 'tag-areas', 'tag-tiempo-mes', 'tag-treemap-solic', 'tag-treemap-tareas', 'tag-mapa'].forEach(id => {
+  ['tag-infull', 'tag-ontime', 'tag-flujo', 'tag-snc', 'tag-horas', 'tag-areas', 'tag-tiempo-mes', 'tag-treemap-solic', 'tag-treemap-tareas', 'tag-mapa'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = labelPeriodo;
   });
@@ -889,8 +895,8 @@ function actualizarDashboard() {
     ontimeSub.textContent = 'Sin registros';
   }
 
-  document.getElementById('kpi-backlog').textContent = d.backlogVenc;
-  document.getElementById('kpi-backlog-sub').textContent = `Backlog Total Acumulado: ${d.backlogTotal}`;
+  document.getElementById('kpi-snc').textContent = d.sncVenc;
+  document.getElementById('kpi-snc-sub').textContent = `SNC Total Acumulado: ${d.sncTotal}`;
 
   // 3. Evolución Dinámica
   const serieInfullHastaCorte = historicoEvolucion.infull.map((val, idx) => (idx <= mesCorte ? val : null));
@@ -921,8 +927,8 @@ function actualizarDashboard() {
   chartFlujos.data.datasets[1].data = [d.tareasIng, d.tareasFin, d.tareasOntime];
   chartFlujos.update();
 
-  chartBacklog.data.datasets[0].data = [d.backlogTotal, d.backlogNoVenc, d.backlogVenc];
-  chartBacklog.update();
+  chartSNC.data.datasets[0].data = [d.sncTotal, d.sncNoVenc, d.sncVenc];
+  chartSNC.update();
 
   chartHoras.data.datasets[0].data = d.horasProc;
   chartHoras.update();
@@ -978,7 +984,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnModoTrimestre.classList.remove('active');
     wrapperMes.classList.remove('hidden');
     wrapperTrimestre.classList.add('hidden');
-    renderTreemap('treemap-todas-areas-acum', treemapTodasAreasAcum, 1);
     actualizarDashboard();
   });
 
@@ -1001,6 +1006,7 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarDashboard();
   });
 
-  // Inicializa con Octubre seleccionado
+  // Renderiza el treemap acumulado y actualiza el tablero con Octubre seleccionado
+  renderTreemap('treemap-todas-areas-acum', treemapTodasAreasAcum, 1);
   actualizarDashboard();
 });
